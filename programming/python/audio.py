@@ -13,16 +13,12 @@ sudo apt-add-repository ppa:samrog131/ffmpeg
 
 sudo apt-get install ffmpeg
 
+run /mnt/hgfs/Data/github/programming/python/audio.py
 
 """
 
 from pydub import AudioSegment
-in_file = r"/mnt/hgfs/Data/Download/LuoJiShiWei/2015 (4).mp3"
-
-out_file = r"/mnt/hgfs/Data/Download/LuoJiShiWei/test.mp3"
-o2 = r"/mnt/hgfs/Data/Download/LuoJiShiWei/test2.mp3"
-
-SplitMp3File(in_file)
+import os
 
 def SplitMp3File(in_file, num_min=5, epsilon=0.5):
     """
@@ -48,7 +44,9 @@ def SplitMp3File(in_file, num_min=5, epsilon=0.5):
     start = 0
     end = step
     i = 0
-    out_file = in_file[:-4] + r'-%s.mp3'
+    out_file = in_file[:-4]
+    if not os.path.isdir(out_file): os.mkdir(out_file)
+    out_file = out_file + r'/%s.mp3'
     while total - end > min_len:
         n = (suffix_len % i).replace(' ', '0')
         slip = song[start:end]
@@ -60,3 +58,8 @@ def SplitMp3File(in_file, num_min=5, epsilon=0.5):
         n = (suffix_len % i).replace(' ', '0')
         slip = song[start:total]
         slip.export(out_file % n, format="mp3")
+
+
+in_file = r"/mnt/hgfs/Data/Download/LuoJiShiWei/2015 (%d).mp3"
+
+for d in range(1,7): SplitMp3File(in_file % d)

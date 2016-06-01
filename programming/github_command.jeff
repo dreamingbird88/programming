@@ -13,9 +13,9 @@ git config --global user.email jeffnju@gmail.com
 git config --global user.name dreamingbird88
 
 
-git add programming/python/audio.py
-git status
-git commit -m "Improve audio.py"
+git add programming/github_command.jeff
+#git status
+git commit -m "Upload github_command"
 git push -u origin master
 
 # 1. First create a repository with browser.

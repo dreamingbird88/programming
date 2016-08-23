@@ -1,8 +1,10 @@
 /** TODO: http://go/java-style#javadoc
 
-# java MyFirstJava This is my first Java. Yeah!
+# Install openjdk
+sudo apt-get purge openjdk-\*
+sudo apt-get install openjdk-8-jdk
 
-javac ~/MyFirstJava.java
+javac MyFirstJava.java
 java MyFirstJava whatareyoudoing?
 
 **/

@@ -1,11 +1,15 @@
-// ================================================================= //
-阅读记录: 2016.08.21 末完成 2013.10.04 2013.10.24 2013.11.12
-// ================================================================= //
-==> 与 quick sort 相比，merge sort 的最大特点是，它是一种稳定的排序方法。merge sort 一般多用于外排序。但它在内排方面也占有重要地位，因为它是基于比较的时间复杂度为O(n*lg(n))的排序算法中唯一稳定的排序，所以在需要稳定内排序时通常会选择merge sort。merge sort 不要求对序列可以很快地进行随机访问，所以在链表排序的实现中很受欢迎。
-==> 要求常数空间的话，第一考虑是否可用固定数目变量(e.g. 变量的范围)，第二考虑是否可以利用原有空间 (e.g. 原有数组)
-==> sorting for duplicates prefer 用 BST + LinkList
-==> 可用 indirect sort 来减少 storage and swapping cost, e.g. 用 indirect counting sort 可节省空间
-// ================================================================= //
+Reading records:
+ * 2016.08.21 末完成
+ * 2013.10.04
+ * 2013.10.24
+ * 2013.11.12
+
+Sorting:
+ * 与 quick sort 相比，merge sort 的最大特点是，它是一种稳定的排序方法。merge sort 一般多用于外排序。但它在内排方面也占有重要地位，因为它是基于比较的时间复杂度为O(n*lg(n))的排序算法中唯一稳定的排序，所以在需要稳定内排序时通常会选择merge sort。merge sort 不要求对序列可以很快地进行随机访问，所以在链表排序的实现中很受欢迎。
+ * 要求常数空间的话，第一考虑是否可用固定数目变量(e.g. 变量的范围)，第二考虑是否可以利用原有空间 (e.g. 原有数组)
+ * sorting for duplicates prefer 用 BST + LinkList
+ * 可用 indirect sort 来减少 storage and swapping cost, e.g. 用 indirect counting sort 可节省空间
+
 
 Rolling max (or min) of an array (n) with window(w){// 利用 index queue 来储存信息 Q 长 w, Q[0] is the index of the maximium element within (k-w,k]
 	define a de-queue, where the front is the index of maximum before that index,

@@ -1,0 +1,43 @@
+# ------------------------------------------------------------ #
+# Detect EFI partition in Windows.
+# ------------------------------------------------------------ #
+# http://www.winability.com/delete-protected-efi-disk-partition/
+# cmd --> diskpart
+
+# list disk
+# select disk #disk_number
+
+# erase all file in selected disk
+# clean 
+
+# ------------------------------------------------------------ #
+# Change the default system in grub2
+# http://forum.ubuntu.org.cn/viewtopic.php?t=440295
+修改启动项顺序:
+
+注：本文所涉及的方法都是在引导加载grub2的基础上所做的讨论。
+
+1.这个方法我比较倾向的
+在Ubuntu终端下输入：
+$sudo mv /etc/grub.d/30_os-prober /etc/grub.d/08_os-prober
+$sudo update-grub
+在这里mv实现的是修改该文件名（我总是觉得看着像是移动命令）
+#该命令是将etc文件夹下的grub.d文件夹下的30_os-prober文件改名为08_os-prober。（08可以改为06~09都可以）。Ubuntu的启动项相关文件名为“10_....”这样就可以将Windows的启动项放在Ubuntu前面，即启动项列表的第一个。由于引导程序默认启动第一个启动项，所以这样就可以先启动Windows了。注意修改完后更新一下grub才能生效（即命令sudo update-grub）。
+
+2.这个方法我觉得有一点不方便，因为UbuntuKylin会更新内核，这样就会多一个preview指向旧内核了，这样grub的启动顺序就又可能变动了
+在Ubuntu终端下输入：
+$sudo gedit /etc/default/grub
+#用文本编辑器打开etc文件夹下的default文件夹下的grub文件。
+在打开的文本中修改“GRUB_DEFAULT=0”这一项。比如Win7在启动项列表中为第5项，则将0改为4。就是win7在启动项列表中的项数减1。
+（这里还可以修改该在启动项列表等待的时间，即修改“GRUB_TIMEOUT=所要等待的秒数”，-1表示不倒计时。）
+修改完后按[Ctrl]+X，会提示是否保存，输入Y，提示保存的文件名，还是原来的grub文件，所以直接回车确定。
+$sudo update-grub，更新一下grub。
+
+执行完成后，重启电脑，也能默认启动windows了。
+# ------------------------------------------------------------ #
+
+
+
+# ------------------------------------------------------------ #
+sudo apt-get install calibre
+# ------------------------------------------------------------ #

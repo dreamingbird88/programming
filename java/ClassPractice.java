@@ -1,0 +1,6 @@
+/*
+
+javac ClassPractice.java
+java ClassPractice
+
+*/

@@ -24,12 +24,30 @@ echo "# for_qi" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
-git remote add origin https://github.com/dreamingbird88/for_qi.git
-git push -u origin master
+git clone https://github.com/dreamingbird88/for_qi
+git remote add for_qi https://github.com/dreamingbird88/for_qi
+git remote set-url programming https://github.com/dreamingbird88/programming
 
-git add yahoo.py
-git commit -m "Organize Download. Not finished."
-git push -u origin master
+git push -u programming master
+
+git commit -m "Practice notes."
+
+git add array_linklist_string.md  graph.md     
+
+git fetch for_qi master
+
+git add python/qi_skull.py
+git commit -m "Update python/qi_skull.py"
+git push -u programming master
+
+git rm -r programming
+git commit -m "Delete a directory."
+git push -u for_qi master
+
+# Delete a repository
+# go to https://github.com/user_name/repository_name/setting
+# dangerous zone --> delete ...
+# local: rm -f -r dir_name
 
 # # or push an existing repository from the command line
 # git remote add origin https://github.com/dreamingbird88/finance.git
@@ -46,9 +64,12 @@ git clone finance
 # git clone https://github.com/dreamingbird88/for_qi
 
 # Add a file
-git add <file>
+cp ~/linux.sh linux.sh
+git add linux.sh
 
 # g4 change
+git config --global user.email jeffnju@gmail.com
+git config --global user.name dreamingbird88
 git commit
 
 # check the commit (change list)

@@ -45,55 +45,49 @@ Questions:
   }
 ```	
 
-Rolling median of online stream{
-	==> solution: Î¬»¤ min-heap and max-heap, Ê¹Æä²î×î¶àÎª1, (median ¼´Îª¶àÕßÖ®root, Èô size ÏàµÈ£¬¸ÕÎªÁ½ roots Ö®Æ½¾ùÖµ) O(nlgn) Amortized O(lg)
-	==> Extension 1: ÈôÇó¸ø¶¨ window µÄ median? 
-			--> Solution: maintain two binary tree, ×óÊ÷(max heap) ½áµãÊıÎªÓÒÊ÷(min heap) ¼õÒ»£¬ÔÙÓÃone queue Î¬³Ö¹ıÆÚ½áµãÖ¸Õë¡£
-	==> Extension 2: rolling top kth statistics of online stream 
-			* Óë top k ²»Ò»Ñù£¬ÒòÎª´æÔÚÔªËØ¹ıÆÚÎÊÌâ£¬¶ø½â¾ö·½·¨ÊÇÓÃ queue ¼ÇÂ¼¹ıÆÚÔªËØÔÚ tree node ÀïµÄÖ¸Õë (ĞèÒªÓĞ parent Ö¸Õë£¬ÈôÃ»ÓĞÖ»ÄÜÏñ linkedlist ÖĞÉ¾³ı cur node Í¨¹ı copy ×Ó½áµãÀ´´ïµ½ É¾³ıµÄÄ¿µÄ)
-			* Óë rolling median Ò²²»Ò»Ñù£¬ÒòÎª median ¿ÉÒÔÊÇÁ½ÊıµÄÆ½¾ù£¬¶ø²»ÊÇ windows ÄÚµÄÔªËØ
-			--> ½â¾ö·½·¨Óë rolling median Í¬Àí£¬Î¬³Ö two tree, Ò»±ßÊÇ min tree ´æ top K ÔªËØ£¬Ò»±ßÊÇ max tree ´æ windows ÄÚµÄÆäËûÔªËØ (ÕâĞ©ÊıµÃÁô×Å×ö¸üĞÂ)¡£ ¶øÓÃ queue<node*> ¸ºÔğ¸üĞÂ index. ÇóËùÓĞrolling Top K ÔªËØ complexity Îª O(nlgk)
-	==> Extension 3: ÔÚÒ»¸ö²»Öª³¤¶ÈµÄÊı×éÀïÕÒ µÚ k th element, ÒªÇó O(n) time, O(k) space;
-			--> solution 1: min-heap O(n lgk); solution 2 (Ãî): Garbage collection »úÖÆ: Î¬»¤ 2k-1 Êı×é£¬Ã¿µ½ 2k-1 Ê± ¸üĞÂÒ»´Î£¬ÁôÏÂ top k ¸ö
-}
+* Rolling median of online stream 
+  * solution: Î¬»¤ min-heap and max-heap, Ê¹Æä²î×î¶àÎª1, median ¼´Îª¶àÕßÖ®root, Èô size ÏàµÈ£¬¸ÕÎªÁ½ roots Ö®Æ½¾ùÖµ. Complexity O(nlgn) Amortized O(lgn)
+  * Extension 1: Çó¸ø¶¨ window µÄ median.
+    * Solution: maintain two binary tree, ×óÊ÷(max heap) ½áµãÊıÎªÓÒÊ÷(min heap) ¼õÒ»£¬ÔÙÓÃone queue Î¬³Ö¹ıÆÚ½áµãÖ¸Õë¡£
+  * Extension 2: rolling top kth statistics of online stream 
+    * Óë top k ²»Ò»Ñù£¬ÒòÎª´æÔÚÔªËØ¹ıÆÚÎÊÌâ£¬¶ø½â¾ö·½·¨ÊÇÓÃ queue ¼ÇÂ¼¹ıÆÚÔªËØÔÚ tree node ÀïµÄÖ¸Õë (ĞèÒªÓĞ parent Ö¸Õë£¬ÈôÃ»ÓĞÖ»ÄÜÏñ linkedlist ÖĞÉ¾³ı cur node Í¨¹ı copy ×Ó½áµãÀ´´ïµ½ É¾³ıµÄÄ¿µÄ)
+    * Óë rolling median Ò²²»Ò»Ñù£¬ÒòÎª median ¿ÉÒÔÊÇÁ½ÊıµÄÆ½¾ù£¬¶ø²»ÊÇ windows ÄÚµÄÔªËØ
+    * Solution: Óë rolling median Í¬Àí£¬Î¬³Ö two tree, Ò»±ßÊÇ min tree ´æ top K ÔªËØ£¬Ò»±ßÊÇ max tree ´æ windows ÄÚµÄÆäËûÔªËØ (ÕâĞ©ÊıµÃÁô×Å×ö¸üĞÂ)¡£ ¶øÓÃ queue<node*> ¸ºÔğ¸üĞÂ index. ÇóËùÓĞrolling Top K ÔªËØ complexity Îª O(nlgk)
+  * Extension 3: ÔÚÒ»¸ö²»Öª³¤¶ÈµÄÊı×éÀïÕÒ µÚ k th element, ÒªÇó O(n) time, O(k) space;   * solution 1: min-heap O(n lgk); solution 2 (Ãî): Garbage collection »úÖÆ: Î¬»¤ 2k-1 Êı×é£¬Ã¿µ½ 2k-1 Ê± ¸üĞÂÒ»´Î£¬ÁôÏÂ top k ¸ö
 
-Î¬»¤²»¶¨ÔªËØµÄ Min-Stack{
-==> Min-Stack, with pop(), push() and min() in O(1) // ÓÃ rolling min Q
-		Solution 1: double the space, Using additional stack to store CurrentMin.
-		Solution 2: O(n) computation in pop() if the popped element is the minimum element
-		Solution 3: maintain an auxilary min-index stack, Q[end] = current mininum element index; Q[k-1] = the index of the minimum element after Q[k] is removed, ËùÒÔ Q ÀïµÄÔªËØ¿Ï¶¨ÊÇ·ÇÔöµÄ
-}
+* Î¬»¤²»¶¨ÔªËØµÄ Min-Stack, with pop(), push() and min() in O(1) // ÓÃ rolling min Q
+  * Solution 1: double the space, Using additional stack to store CurrentMin.
+  * Solution 2: O(n) computation in pop() if the popped element is the minimum element
+  * Solution 3: maintain an auxilary min-index stack, Q[end] = current mininum element index; Q[k-1] = the index of the minimum element after Q[k] is removed, ËùÒÔ Q ÀïµÄÔªËØ¿Ï¶¨ÊÇ·ÇÔöµÄ
 
 Î¬»¤²»¶¨ÔªËØµÄ Min-Queue{ // with pop(), push() and min() in O(1)
 		Solution 1: double the space, Using additional stack to store CurrentMin.
 		Solution 2: ÓÃÒ»¸ö index queue ¼° timestamp, ÈëÔªËØÊ±£ºµ± q.back() > A[i], q.push_back(t); ³öÔªËØÊ±: µ± timestampe - q.front() < Queue size Ê±£¬pop()
 }
 
-¸ø¶¨ n ¸öÊı£¬Çó x, Ê¹µÃ \sum_{n} |v_n - x| ×îĞ¡£¬¼´ÇóÖĞÎ»Êı{
+* ¸ø¶¨ n ¸öÊı£¬Çó x, Ê¹µÃ \sum_{n} |v_n - x| ×îĞ¡£¬¼´ÇóÖĞÎ»Êı
 	==> Extension: ÓĞÒ»¶°Â¥£¬Ò»¹²ÓĞN²ã£¬ÒªÈ¥Ã¿Ò»²ãµÄÈË·Ö±ğÊÇA[1],A[2]....A[N]£¬Èç¹ûµçÌİ¿ÉÒÔÍ£K´Î£¬ÎÊÍ£ÔÚÄÄK²ãÈÃËùÓĞÈË×ßµÄ¾ØÀë×î¶Ì
 	==> Solution: opt_k[j]--µçÌİÇ°k´ÎÍ£ÔÚ1µ½j²ãÖ®¼ä 1-j µÄÈËµÄ×îÓÅ½â, cost[i][j]--µÚi²ãµ½µÚj²ãÍ£Ò»´ÎÈÃ [i,j]Ö®¼äµÄÈË×ß×îÓÅ½â
 		opt_{k+1}[i]=min_t{opt_k[t]+cost[t+1,i];} (i<=n) ÆäÖĞ opt_1[k] = c[1][k], ¶ø c[i,j] = median(i,j) ÓÃ rolling median Çó½âÖ»Ğè O(n^2)
 		¶øÇó¶¯Ì¬µİ¹éÖ»Ğè O(k*n*n), ËùÒÔ¹²Ğè O(k*n^2)
-}
 
-¸ø¼¯ºÏ S = {1,...,n}, ¼°Á½µÈ³¤ index array A[K], B[K] with  {A[k],B[k]} ÔÚÍ¬Ò»¼¯ºÏ. Çó A[K], B[K] °Ñ 1,...,n ·Ö³ÉµÄËùÓĞ×Ó¼¯{
+* ¸ø¼¯ºÏ S = {1,...,n}, ¼°Á½µÈ³¤ index array A[K], B[K] with  {A[k],B[k]} ÔÚÍ¬Ò»¼¯ºÏ. Çó A[K], B[K] °Ñ 1,...,n ·Ö³ÉµÄËùÓĞ×Ó¼¯
 	==> Ë¼Â·: ½¨Ò»¸ö I[n], ³õÊ¼»¯Îª -1; I[i] Îª ÔªËØ i ¶ÔÓ¦µÄ list Ê×Ö¸Õë(×îºÃ»¹ÓĞÎ²Ö¸Õë£¬·½±ãºÏ²¢); Ã¿ÓöÒ»ÔªËØ A[k], Èô I[A[k]] Îª¿Õ£¬Ôò½¨ĞÂÖ¸Õë; Èô·Ç¿ÕÇÒÁ½¸ö list ²»Í¬£¬Ôò½«ĞÂ list ½Óµ½Ô­list ÉÏ£¬ÇÒ¸üĞÂĞÂ list ÉÏ¸÷ÔªËØµÄ I[i];
-}
 
-Given an array of numbers, nums, return an array of numbers products, where products[i] is the product of all nums[j], j != i.{
+* Given an array of numbers, nums, return an array of numbers products, where products[i] is the product of all nums[j], j != i.
 	Input : [1, 2, 3, 4, 5]
 	Output: [(2*3*4*5), (1*3*4*5), (1*2*4*5), (1*2*3*5), (1*2*3*4)] = [120, 60, 40, 30, 24]
 	You must do this in O(N) without using division. 
 	==> solution: Á½±ß¼ÆËã Prefix and Suffix
-}
 
-Find the Minimum Non-Existing Positive Integer{ // ÀûÓÃ array index µÄĞÅÏ¢À´ÅĞ¶ÏÈ±ÉÙÔªËØ»òÊÇÖØ¸´ÔªËØ
+* Find the Minimum Non-Existing Positive Integer // ÀûÓÃ array index µÄĞÅÏ¢À´ÅĞ¶ÏÈ±ÉÙÔªËØ»òÊÇÖØ¸´ÔªËØ.
 [3,4,-1,1] returns 2 // ×¢Òâ 4 Óë 1 ½»»»Ê±£¬1 »¹ĞèÒª¼ÌĞø½»»»
 
 Can you do it in O(n) time and O(1) space?
 ==> Solution: swap n to a[n], then find the first k, a[k] != k;
 or Find all duplicates in an array of size N where the values in the array can be from 0-N
 
+```
 int MinNonExistPosInt(int * Array, int Len){
 	for(int i = 0; i < Len; ++i)	{
 		while(Array[i] > 0 && Array[i] <= Len)		{
@@ -109,10 +103,11 @@ int MinNonExistPosInt(int * Array, int Len){
 	for(int i = 0; i < Len; ++i)if(i+1 != Array[i])return i+1;
 	return Len+1;
 }	
-}
+```
 
-Find the median of two sorted arrays (can be different sizes){
+* Find the median of two sorted arrays (can be different sizes)
 	==> °ÑÎÊÌâÉî»¯ÎªÇó µÚ k ¸öÔªËØ ±È½ÏºÃĞ´ code.
+```
     double findKthElement(int A[], int m, int B[], int n, int k) {// m + n >= k
         if(m == 0) return B[k-1];
         if(n == 0) return A[k-1];
@@ -123,13 +118,14 @@ Find the median of two sorted arrays (can be different sizes){
         // if A[a] < B[b];  for A[i], i <= a, at most i+b <= a+b <= k - 2 element <= A[i], therefore eleminate A[i] up to i == a
         return A[a] < B[b]? findKthElement(A+a+1,m-a-1,B,n,k-a-1): findKthElement(A,m,B+b+1,n-b-1,k-b-1);
     }
-}
+```
 
-Given two sorted arrays A, B of size m and n respectively. Find the k-th smallest element in the union of A and B{
+* Given two sorted arrays A, B of size m and n respectively. Find the k-th smallest element in the union of A and B
 
 You can assume that there are no duplicate elements.
 
 ==> solution: O(lg(min(m,n,k))), or lg(k) Ã¿´ÎÈ¥³ı k/2 ¸ö (ÖÁÉÙÒ»¸ö array ÀïµÄÇ° k/2¸ö)£¬¶ş·Ö·¨ 
+```
 	int KthElementTwoArray(int * A, int a, int * B, int b,k){
 		if(a == 0 && b == 0 || k > a + b) throw error;
 		if(a == 0) return b[k-1];
@@ -137,6 +133,7 @@ You can assume that there are no duplicate elements.
 		int ai = min(k/2,a-1), bi = min(k/2,b-1);
 		return a[ai] < b[bi]? KthElementTwoArray(A+ai+1,a-ai-1,B,b,k-ai-1):KthElementTwoArray(A,a,B+bi+1,b-bi-1,k-bi-1);
 	}
+```
 	
 ==> Extension:
 	(1) Given a N*N Matrix. All rows are sorted, and all columns are sorted. Find the Kth Largest element of the matrix.(Young Matrix?)
@@ -144,31 +141,23 @@ You can assume that there are no duplicate elements.
 	(2) what about M arrays? 
 			==> solution 1: O(klgk) using k-heap, each element needs lg(k) // too bad
 			==> solution 2: ÓëÁ½×éÒ»Ñù£¬²»¹ıÃ¿´ÎÖ»ÄÜÈ¥ M/k * 2 ¸öÔªËØ
-}
 
-2D Young ÊÏ matrix ²éÕÒ ÊÇ·ñ´æÔÚÄ³Êı{
-	==> Ã¿´Î±È½Ï A[0][n-1]; ÓÉ´ËÈ·¶¨ É¾³ı ÁĞ»¹ÊÇĞĞ
-}
+* 2D Young ÊÏ matrix ²éÕÒ ÊÇ·ñ´æÔÚÄ³Êı ==> Ã¿´Î±È½Ï A[0][n-1]; ÓÉ´ËÈ·¶¨ É¾³ı ÁĞ»¹ÊÇĞĞ
 
 
-³¤ÎªnµÄÊı×éÀïÕÒÀëmedian×î½üµÄk¸öÊı£¬ÒªO(n)µÄcomplexity{//Find unsorted Êı×éÇ° k ¸öÊıÖ»ĞèÒª O(n);
+* ³¤ÎªnµÄÊı×éÀïÕÒÀëmedian×î½üµÄk¸öÊı£¬ÒªO(n)µÄcomplexity//Find unsorted Êı×éÇ° k ¸öÊıÖ»ĞèÒª O(n);
 	==> Solution 1: O(nlgn) ÏÈ sort then O(k);
 	==> Solution 2: O(n+k) (a) Find median with Quick sort O(n) amortized: ÏÈ RANDOMLY select pivot value, ÔÙ split array; (b) ÔÙ½« 2 * k É¨ÃèÒ»±é¼´¿É
-}
 
-¸ø partially sorted array A[n], Ã¿¸öÔªËØÆ«ÀëÕıÈ·Î»ÖÃ at most k, sort Õâ¸öÊı×é O(nlgk) in space{
+* ¸ø partially sorted array A[n], Ã¿¸öÔªËØÆ«ÀëÕıÈ·Î»ÖÃ at most k, sort Õâ¸öÊı×é O(nlgk) in space
 	==> ÓÃ k length min-heap, Ã¿´ÎÒÆÎ»Ò»¸ö£¬ÔÙµ÷Õû heap O(lgk)
-}
 
-10.10 ÅĞ¶Ï heap ÖĞµÚkÔªËØÓë x µÄ¹ØÏµ, ÒªÇóÊ±¼äÓë space ½ÔÔÚ O(k) {// ???
-	==> ÓÃ EquCnt, LagCnt±éÀú O(k) 
-}
+* 10.10 ÅĞ¶Ï heap ÖĞµÚkÔªËØÓë x µÄ¹ØÏµ, ÒªÇóÊ±¼äÓë space ½ÔÔÚ O(k) ==> ÓÃ EquCnt, LagCnt±éÀú O(k) 
 
-KMP¿ìËÙ×Ö·û´®²éÕÒËã·¨(Knuth-Morris-Pratt) search a word w in a string s, O(w+s) instead of O(w*s) {
-==> Build an array for length of w: I[0] = -1; where I[i] meaning index of the elment in W should be compared when the ith element is not equal. e.g
+* KMP¿ìËÙ×Ö·û´®²éÕÒËã·¨(Knuth-Morris-Pratt) search a word w in a string s, O(w+s) instead of O(w*s) 
+==> Build an array for length of w: I[0] = -1; where I[i] meaning index of the elment in W should be compared when the ith element is not equal. e.g ĞŞÕı a b a b ²»ÊÇ -1 0 0 1, ¶øÓ¦ÊÇ -1 0 -1 0, ¶àÒ»¸ö 
 
-ĞŞÕı a b a b ²»ÊÇ -1 0 0 1, ¶øÓ¦ÊÇ -1 0 -1 0, ¶àÒ»¸ö 
-
+```
 int * get_KMP_Ind(char*str, int Len){
 	if(Len == 0) return 0;
 	if(Len == 1) return new int(-1);
@@ -199,8 +188,9 @@ int strstr(char* str, in strlen, char*pattern, int plen){
 	if(KMP_Ind)free(KMP_Ind);
 	return pi == plen? si - plen:-1;
 }
+```
 
-BM Boyer-Moore Ëã·¨{// ½« String Pattern ×ó¶ÔÆë£¬´Ó P ×îºó×Ö·û¿ªÊ¼±È½Ï¡£ strsub Êµ¼ÊÊ¹ÓÃµÄ
+* BM Boyer-Moore Ëã·¨// ½« String Pattern ×ó¶ÔÆë£¬´Ó P ×îºó×Ö·û¿ªÊ¼±È½Ï¡£ strsub Êµ¼ÊÊ¹ÓÃµÄ
 	http://blog.csdn.net/v_JULY_v/article/details/6545192
 	http://www.inf.fh-flensburg.de/lang/algorithmen/pattern/bmen.htm
 	http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html
@@ -208,22 +198,19 @@ BM Boyer-Moore Ëã·¨{// ½« String Pattern ×ó¶ÔÆë£¬´Ó P ×îºó×Ö·û¿ªÊ¼±È½Ï¡£ strsub 
 	BMËã·¨¾ÍÊÇÕÒ »µ×Ö·û¹æÔò ×îºÃºó×º¹æÔò ÖĞµÄ×î´óÎ»ÒÆ, µ±ÓĞÒ»¸ö mismatch Ê±£¬¼ÆËã bad character ºÍ good suffix µÄÎ»ÒÆ
 	1) Bad character heuristics£º Ò»¸ö×ÖÄ¸±í index£¬Èôpattern ÖĞÃ»ÓĞ£¬Ôò³¤¶ÈÎª Pattern_length, ·ñÔò£¬Îªpattern Àï´Óºóµ½Ç°×î½üµÄÎ»ÖÃ
 	2) Good suffix heuristics£º 
-}
 
-Given a string S, find the longest palindromic substring in S{
+* Given a string S, find the longest palindromic substring in S
 	==> Solution 1, O(n^2): check each element as center of possible substring, need to consider "abba", not just "aba", ²åÈë ¿Õ¸ñ
 	==> Solution 2, O(n^2): DP; p[i,j] = true if i...j is palindromic. Initial p[i,i] = true, p[i,i+1] = true is s[i] == s[i+1]; p[i-1,j+1] = p[i,j] && s[i-1] == s[j+1];
 	==> Solution 3, O(n): Let Len[i] be the length of palindromic with center on i; if c is the index of current center and d <= Len[c], then Len[c-d] <= Len[c+d]; when ÒÔ c-d ÎªÖĞĞÄµÄ×Ó´®ÔÚ ÒÔ c ÎªÖĞĞÄµÄ´®ÄÚÊ±(¼´ c-Len[c] < c-d - Len[c-d]) »òÕß Len[c+d] µ½Ä©Î²Ê±, µÈºÅ³ÉÁ¢. ÈôµÈºÅ²»³ÉÁ¢£¬Ôò¿ÉÒÔ c+d ÎªÖĞĞÄ(×¢Òâ d ´Ó 1 µ½ Len[c]) 
 	==> Solution 4, O(n): Suffix trees. S and S', if the LP Substring center at c, then the center in S' is at n-c+1. check whether (c,n-c+1) is the 
 			http://blog.csdn.net/linulysses/article/details/5634104
-}
 
-½«Ò»×Ö´®ÖĞ 'b' É¾³ı ¼° 'a' ±ä³É 'aa' in O(1) space, ¼ÙÉèÔ­´®ÓĞ×ã¹»¿Õ¼ä±ä»»ºóµÄĞÂ´®{
+* ½«Ò»×Ö´®ÖĞ 'b' É¾³ı ¼° 'a' ±ä³É 'aa' in O(1) space, ¼ÙÉèÔ­´®ÓĞ×ã¹»¿Õ¼ä±ä»»ºóµÄĞÂ´®
 	==> solution 2: ´ÓÎ²¿ªÊ¼ replace. 
 	==> solution 1: ÏÈÉ¨Ò»±é¸ù¾İ 'b', 'a'	¸öÊı¼ÆËã³öĞÂ´®³¤¶È£¬ÔÙ´ÓÎ²¿ªÊ¼
-}
 
-Search in Rotated Sorted Array{
+* Search in Rotated Sorted Array
 	Suppose a sorted array is rotated at some pivot unknown to you before hand.
 	
 	(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
@@ -232,40 +219,34 @@ Search in Rotated Sorted Array{
 	
 	==> If no duplicate exists in the array: O(lgn), ¸ù¾İ A[s] A[c] A[e] µÄ¹ØÏµÀ´ÅĞ¶ÏËùÔÚÄÇÒ»¶Î
 	==> If duplicate exists in the array: ÔÚÓÚÈıÕßÏàµÈÊ±£¬ÄÑÒÔÅĞ¶Ï×óÓÒ, ÆäËûÇé¿ö½Ô¿É·Ö¶Î
-}
 
-Given a array of integers , find 3 indexes i,j,k such that, i< j < k and a[i] < a[j] < a[k] {// ???
+* Given a array of integers , find 3 indexes i,j,k such that, i< j < k and a[i] < a[j] < a[k] // ???
 	==> Solution: O(lg n), two candidate index set, with s2[0] < s1[0] < s1[1], for any i, if(a[i] > s1[1]){found!}else{if(a[i] > s2[0]){replace s1 with s2[0] and a[i], clear s2;}
 	}
-}
 
-Ò»¸öÊı×éÖĞÈÎÒâÒ»¸ölocal min(±ÈËü×óÓÒ¶¼Ğ¡)¾Í¿ÉÒÔ{// ???
+* Ò»¸öÊı×éÖĞÈÎÒâÒ»¸ölocal min(±ÈËü×óÓÒ¶¼Ğ¡)¾Í¿ÉÒÔ// ???
 	±ÈÈç1,2,3,7,19,8,6,11,34,23,67 ÀïÃæµÄ6±È8,11Ğ¡£¬23±È34,67Ğ¡£¬¶¼ÊÇ local min¡£
 	==> solution O(lgN) ²»ÖØ¸´µÄÊı: Èô b > m < e, if(m-1 < m) search [b,m] else search [m-1,e]
-}
 
-ÔÚÒ»¸öintÊı×éÀï²éÕÒÕâÑùµÄÊı£¬Ëü´óÓÚµÈÓÚ×ó²àËùÓĞÊı£¬Ğ¡ÓÚµÈÓÚÓÒ²àËùÓĞÊı{// Á½¶ËµÄÊıËãÊ²Ã´?
+* ÔÚÒ»¸öintÊı×éÀï²éÕÒÕâÑùµÄÊı£¬Ëü´óÓÚµÈÓÚ×ó²àËùÓĞÊı£¬Ğ¡ÓÚµÈÓÚÓÒ²àËùÓĞÊı// Á½¶ËµÄÊıËãÊ²Ã´?
 	==> solution: ´Ó×óµ½ÓÒÉ¨Ãè£¬½« max index Èë stack; ´ÓÓÒµ½×óÉ¨Ãè£¬Óöµ½ min ÔòÓë stack ÀïµÄ max ±È½ÏÊÇ·ñÍ¬Ò» index
-}
 
-ÈÃÄãÅÅĞòN¸ö±ÈN^7Ğ¡µÄÊı£¬ÒªÇóµÄËã·¨ÊÇO(n){// ¸øÁËÌáÊ¾..ËµÍùN½øÖÆÄÇ·½ÃæÏë£¬bucket sort, ×¢Òâ 7 ÊÇ³£Á¿
+* ÈÃÄãÅÅĞòN¸ö±ÈN^7Ğ¡µÄÊı£¬ÒªÇóµÄËã·¨ÊÇO(n)// ¸øÁËÌáÊ¾..ËµÍùN½øÖÆÄÇ·½ÃæÏë£¬bucket sort, ×¢Òâ 7 ÊÇ³£Á¿
 	==> solution: Á½Í·É¨Ãè£¬½«±È N^6 ´óµÄÊıÒÆµ½×î×ó; ÔÙ´Î¾ÍÊÇ N^5, N^4, ... N, Ò»ÂÖ¾ÍÊÇ O(n); ¼ÇÏÂ·Ö¶ÎµØÖ·£¬ÔÙÏÂÒ»ÂÖ, ¹²7ÂÖ
-}
 
-ÇóËæ»úÊı¹¹³ÉµÄ¼¯ºÏÖĞÕÒµ½³¤¶È´óÓÚ=3µÄ×î³¤µÄµÈ²îÊıÁĞ{// ???
+* ÇóËæ»úÊı¹¹³ÉµÄ¼¯ºÏÖĞÕÒµ½³¤¶È´óÓÚ=3µÄ×î³¤µÄµÈ²îÊıÁĞ // ???
 	eg. ÊäÈë[1,3,0,5,-1,6], Êä³ö[-1,1,3,5]. ÒªÇóÊ±¼ä¸´ÔÓ¶È£¬¿Õ¼ä¸´ÔÓ¶È¾¡Á¿Ğ¡
-}
 
-count the number of reverse order pair{
+* count the number of reverse order pair
 	Give an integer array A[] with size of n, count the number of reverse order pair.
 	e.g. [6 2 5 3 9], pairs: (6,5), (6,3), (5,3) count = 3;
 	==> Solution: insertion sort/bubble sort + count O(n^2)
 	==> Extension: give B[] and A[], count the number of reverse order of A[]'s elements in B[]'s order
-}
 
-find the kth integer that contains only factors 2,3,5, starting from 1 {
+* find the kth integer that contains only factors 2,3,5, starting from 1 {
 	==> solution 1 : O(k), 3 queue, each for 2,3,5. find the minimum of the three, if it pop up from the small number, then multiple with number that greater than it // ×¢ÒâÒç³ö
 		
+```
 	int FindKthElement(vector<int>& Factors,int k)// for more general number of factors
 	{
 		vector< queue<int> > Qs;
@@ -312,14 +293,15 @@ find the kth integer that contains only factors 2,3,5, starting from 1 {
 	
 		return result;
 	}
+```
 	==> solution 2: [1,k*2] ¼äÕÒÒ»ÕûÊı i£¬Ê¹µÃ f(i) := i/2 + i/3 + i/5 - i/6 - i/15 - i/10 + i/30 < k but f(i+1) >= k?
-}
 
-Maximum profit from stocks {
+* Maximum profit from stocks 
 	http://www.leetcode.com/groups/google-interview/forum/topic/maximum-profit-from-stocks/
 	Given M different stocks prices across N different day and an Amount D dollars. how do you maximise your profit by buying and selling stocks. more formally: this is an MxN matric. Each row corresponds to a stock and N columns correspond to price of the stock on day ¡°i¡±. You are given D dollars to buy and sell stocks. maximize your profits.
 	==> If can buy and sell daily: for each stock, calculate p_{i+1}/p_i to get a M*N matrix; then for each day, find the max(d)
 	==> If one can only buy and sell once: for each stock, find the p_max/p_min; find the stock with the max p_max/p_min
+```
 		Best Time to Buy and Sell Stock{// Ö»ÄÜÒ»´Î½»Ò×£¬ÕÒÖ®Ç°×îµÍµã
 		    int maxProfit(vector<int> &prices) {// 2013.09.23 ÎŞ´íÍ¨¹ı
 		        if(prices.empty()) return 0;
@@ -347,10 +329,12 @@ Maximum profit from stocks {
 		        return Profit+max(prices[n-1] - PreMin,0);
 		    }
 		}  
+```
 		
-		Best Time to Buy and Sell Stock III{// ¿ÉÒÔ×î¶à½»Ò×Á½´Î£¬²»ÄÜÍ¬Ê±½øĞĞ
+		Best Time to Buy and Sell Stock III// ¿ÉÒÔ×î¶à½»Ò×Á½´Î£¬²»ÄÜÍ¬Ê±½øĞĞ
 			==> ´Ó×óµ½ÓÒ for each i, ¼ÆËãµÚÒ»´ÎÒÔ i ½áÊøµÄ½»Ò× maximum profit; ´ÓÓÒµ½×ó for each i, ¼ÆËãµÚ¶ş´Î½»Ò×ÔÚ (i,e] ÄÚ·¢ÉúµÄ profit
 			// Error 1: ÄæÏò¼ÆËãÊ±ÑØÓÃ PreMin, Ó¦Îª PreMax, ¶øÇÒ PreMax Ó¦ÔÚÇ°
+```
 		    int maxProfit(vector<int> &prices) {// 2013.09.23 ÓÃ¶¯Ì¬¹æ»®£¬·ÖÁ½¸ö×Ó´®£¬Ç°ºóÉ¨Ãè
 		        int n = prices.size();
 		        if(n <= 1) return 0;
@@ -370,46 +354,38 @@ Maximum profit from stocks {
 		        delete[] Profit;
 		        return MaxProfit;
 		    }
-		} 
-}
+```
 
-Two Sum Problem{
+* Two Sum Problem
 	==> solution 1: sort O(nlgn) and find O(n) with space complexity O(1), Á½Í·É¨Ãè
 	==> solution 2: hash(a_i) and hash(sum - a_i) with time complexity O(n) but space complexity O(n);
 	==> Extension: ÔÚ abs-sorted µÄ array ÀïÕÒ two sum: two pointer£¬Ò»¸öÕıÊı£¬Ò»¸ö¸ºÊı
 	==> Extension: Á½Êı²î Îª k 
-}
 
-Three Sum, without extra space{
+* Three Sum, without extra space
 		* Solution 1: O(n^{k-1}), similar to K-sum: ¼´ hash table, È»ºó²é -(a[i] + a[j])µÄ value; 
 		* Soultion 2: Using extra space, C_n^{k/2} and O(n^{k/2} lgn) if k is even; C_n^{(k+1)/2} and O(n^{(k+1)/2}) if k is odd. Using extra space ²»½â
 		* Solution 3: O(n^2): ÏÈ sort O(nlgn), È»ºóÃ¿¸öÊı£¬¿´ÄÜ·ñÕÒµ½ÁíÁ½¸öÊ¹ÈıÕßÖ®Îª 0 O(n^2)
 		* Conclusion: for K-sum, requires O(n^{Omega(K)}) <On the Possibility of Faster SAT Algorithms> by Mihai Patrascu and Ryan Williams.
-}
 
-N sum problem{
+* N sum problem
 		* solution 1: recursive enumerate
 		* solution 2: backpack problem 
 		* extension : ÓĞÁ½¸öĞòÁĞa,b£¬´óĞ¡¶¼Îªn,ĞòÁĞÔªËØµÄÖµÈÎÒâÕûÊı£¬ÎŞĞò£»ÒªÇó£ºÍ¨¹ı½»»»a,bÖĞµÄÔªËØ£¬Ê¹ĞòÁĞaÔªËØµÄºÍÓëĞòÁĞbÔªËØµÄºÍÖ®¼äµÄ²î×îĞ¡¡£
-}
 
-Á½¸östring, ¸ø³öËüÃÇµÄÁ½¸öµÈ³¤µÄsubstring, ¶¨ÒåËüÃÇµÄ¾àÀëÎªdistance=sum_i(s1[i]-s2[i])£¬ÕÒ¾àÀë×î´óµÄÁ½¸ösubstring{// DP 
-	==> If without absolute "s1[i]-s2[i]"
-	==> If with absolute "abs(s1[i]-s2[i])"
-	==> Solution DP or Çî¾Ù: O(n*m) time + O(n) space
-	f(str1,str2) = max{f(str1-1,str2), f(str1,str2-1), g(str1-1,str2-1)+ str1[end] - str2[end]},where g(str1,str2) is the max distance of suffix. 
-}
+* Á½¸östring, ¸ø³öËüÃÇµÄÁ½¸öµÈ³¤µÄsubstring, ¶¨ÒåËüÃÇµÄ¾àÀëÎªdistance=sum_i(s1[i]-s2[i])£¬ÕÒ¾àÀë×î´óµÄÁ½¸ösubstring // DP 
+  * If without absolute "s1[i]-s2[i]"; If with absolute "abs(s1[i]-s2[i])";
+  * Solution DP or Çî¾Ù: O(n*m) time + O(n) space. f(str1,str2) = max{f(str1-1,str2), f(str1,str2-1), g(str1-1,str2-1)+ str1[end] - str2[end]},where g(str1,str2) is the max distance of suffix. 
 
-Ò»¸öµ¥´ÊµÄÁĞ±í£¬ÒªÕÒ³öÁ½¸öµ¥´Ê£¬ËüÃÇÃ»ÓĞÏàÍ¬µÄ×ÖÄ¸³öÏÖ£¬¶øÇÒ³¤¶È³Ë»ı×î´ó{
-	==> Solution: ¸ù¾İµ¥´ÊÁĞ±í¹¹ÔìÒ»¸ö 26 ²ãµÄÊ÷. µÚÒ»²ã 'A' yes or no, Node{int MaxLen} °´ÕÕÃ¿¸ö word µÄ signature, bool IsInWord[26]; Ö»´æ·ûºÏ¸Ã signature µ¥´Ê×î³¤µÄ³¤¶È¡£ÖĞ¼ä½ÚµãµÄ MaxLen ±íÊ¾Æä×Ó½ÚµãÖĞµÄ×î³¤³¤¶È¡£ È»ºóÕÒ complementary ×Ü¹² O(n)
-}
+* Ò»¸öµ¥´ÊµÄÁĞ±í£¬ÒªÕÒ³öÁ½¸öµ¥´Ê£¬ËüÃÇÃ»ÓĞÏàÍ¬µÄ×ÖÄ¸³öÏÖ£¬¶øÇÒ³¤¶È³Ë»ı×î´ó
+  * Solution: ¸ù¾İµ¥´ÊÁĞ±í¹¹ÔìÒ»¸ö 26 ²ãµÄÊ÷. µÚÒ»²ã 'A' yes or no, Node{int MaxLen} °´ÕÕÃ¿¸ö word µÄ signature, bool IsInWord[26]; Ö»´æ·ûºÏ¸Ã signature µ¥´Ê×î³¤µÄ³¤¶È¡£ÖĞ¼ä½ÚµãµÄ MaxLen ±íÊ¾Æä×Ó½ÚµãÖĞµÄ×î³¤³¤¶È¡£ È»ºóÕÒ complementary ×Ü¹² O(n)
 
-ÕÒ string s ÖĞ×î³¤ÖĞ lexicographic order ×î´óµÄÎŞÖØ¸´×ÖÄ¸µÄ×Ó´®{ eg: Input "babab"; Output "ba"
-==> solution: ¼ÆËã s signature bool IsInWord[26], ÕâÑù¾ÍµÃ³öËùÇó substring len = sum(IsInWord). 
-}
-Longest Substring Without Repeating Characters {
-	ÕÒ A[] ÖĞ×î³¤¶Ì×Ó´®£¬Ê¹Ö®²»°üº¬ÖØ¸´×ÖÄ¸£ºÓÃ Begin[26], ¼° startInd, Ö»ÓĞÔÚ Begin[26] > startInd ²Å¸üĞÂ MaxLength.
-	==> Ë¼Â·: ÓÃ C[26] ¼ÇÂ¼×î³Ù³öÏÖµÄ index, Pre ²»ÖØ¸´×Ö´®Ê××Ö·ûÇ°µÄ×ø±ê£¬¼´²»°üÀ¨ A[Pre]
+* ÕÒ string s ÖĞ×î³¤ÖĞ lexicographic order ×î´óµÄÎŞÖØ¸´×ÖÄ¸µÄ×Ó´® eg: Input "babab"; Output "ba"
+  * solution: ¼ÆËã s signature bool IsInWord[26], ÕâÑù¾ÍµÃ³öËùÇó substring len = sum(IsInWord). 
+
+* Longest Substring Without Repeating Characters. ÕÒ A[] ÖĞ×î³¤¶Ì×Ó´®£¬Ê¹Ö®²»°üº¬ÖØ¸´×ÖÄ¸£ºÓÃ Begin[26], ¼° startInd, Ö»ÓĞÔÚ Begin[26] > startInd ²Å¸üĞÂ MaxLength.
+  * Ë¼Â·: ÓÃ C[26] ¼ÇÂ¼×î³Ù³öÏÖµÄ index, Pre ²»ÖØ¸´×Ö´®Ê××Ö·ûÇ°µÄ×ø±ê£¬¼´²»°üÀ¨ A[Pre]
+```
     int lengthOfLongestSubstring(string s) { 
         int C[26], Max = 0, Time = -1, i;
         for(i = 0; i < 26; ++i) C[i] = -1;
@@ -423,10 +399,10 @@ Longest Substring Without Repeating Characters {
         }
         return Max;
     }
-}
+```
 
 
-ÕÒminimum window in A, contains string B {// ×¢Òâ ÊÇÓĞ´ÎĞòµÄ
+* ÕÒminimum window in A, contains string B {// ×¢Òâ ÊÇÓĞ´ÎĞòµÄ
 input
 A = [1, 9, 3, 4, 12, 13, 9, 12, 21]
 B = [9, 12, 21]
@@ -434,104 +410,75 @@ B = [9, 12, 21]
 output
 A[6..8] = [9, 12, 21]
 
-½¨Á¢Ò»¸ö B.length() ³¤µÄÊı×é£¬¼ÇÂ¼ÏÂÒ»¸öÔªËØÊÇ B[i] µÄ window ÔÚ A ÖĞ ×î¿ªÊ¼ÔªËØÎ»ÖÃ. ÔÙ½¨Ò»¸ö vector<int> Set[26], Set[i] ¶ÔÓ¦ 'a'+i ÔÚ B ÖĞ³öÏÖµÄÔªËØÎ»ÖÃ
-==> Ã¿¸ö½â¶¼ÓÉ BeginInd, ¼° NextElementInB ¹¹³É
-==> One-pass solution: maintain a queue Q with element <BeginInd,NextElementInB>, initially, it has an element <-1,0> 
+* ½¨Á¢Ò»¸ö B.length() ³¤µÄÊı×é£¬¼ÇÂ¼ÏÂÒ»¸öÔªËØÊÇ B[i] µÄ window ÔÚ A ÖĞ ×î¿ªÊ¼ÔªËØÎ»ÖÃ. ÔÙ½¨Ò»¸ö vector<int> Set[26], Set[i] ¶ÔÓ¦ 'a'+i ÔÚ B ÖĞ³öÏÖµÄÔªËØÎ»ÖÃ
+  * Ã¿¸ö½â¶¼ÓÉ BeginInd, ¼° NextElementInB ¹¹³É
+  * One-pass solution: maintain a queue Q with element <BeginInd,NextElementInB>, initially, it has an element <-1,0> 
 	scan A one-pass, for each element A[CurInd], update Q with
 	  1. if A[CurInd] == B[NextElementInB]; if (NextElementInB == 0){ BeginInd = CurInd}; update NextElementInB += 1; 
 	  2. Delete q[b1,n1] if existing q[b2,n2] in Q, s.t. b1 <= b2 and n1 <= n2;
-}
 
-Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n){
+* Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n)
 	// ÓëÉÏÌâÏà±ÈÊÇ ×ÖÄ¸¼¯ºÜĞ¡£¬¶øÕûÊı¼¯ºÜ´ó, ÇÒÕâÀï´ÎĞòÎŞ¹Ø
-	==> solution: 1. ÓÃ cnt[26/52] Í³¼Æ³ö T ³öÏÖµÄ×Ö·ûÊı£¬¼°×Ö·ûÖÖÀà¸öÊı posCnt, negCnt = 0; 2. right=0 <n ¸üĞÂcnt posCnt negCnt Ê¹ posCnt = 0; left = 0 < right ¸üĞÂcnt posCnt negCnt Ê¹ negCnt = 0; 3. Èô posCnt = negCnt = 0 ±íÃ÷ÕÒµ½°üÀ¨ T µÄ S ×Ó´®, ¸üĞÂ left µ½µÚÒ»¸ö T µÄ×Ö·û£¬ÔòÕÒµ½´Ë¶Î×î¶Ì×Ó´®, ¸üĞÂ Max[2](ÆğÊ¼Óë³¤¶È)¡£ÈôÖ»Ğè°üÀ¨ T, ÔòÖ»ĞèÒªÎ¬³Ö posCnt == 0
-	For example,
-	S = "ADOBECODEBANC"
-	T = "ABC"
-}
+  * solution: 1. ÓÃ cnt[26/52] Í³¼Æ³ö T ³öÏÖµÄ×Ö·ûÊı£¬¼°×Ö·ûÖÖÀà¸öÊı posCnt, negCnt = 0; 2. right=0 <n ¸üĞÂcnt posCnt negCnt Ê¹ posCnt = 0; left = 0 < right ¸üĞÂcnt posCnt negCnt Ê¹ negCnt = 0; 3. Èô posCnt = negCnt = 0 ±íÃ÷ÕÒµ½°üÀ¨ T µÄ S ×Ó´®, ¸üĞÂ left µ½µÚÒ»¸ö T µÄ×Ö·û£¬ÔòÕÒµ½´Ë¶Î×î¶Ì×Ó´®, ¸üĞÂ Max[2](ÆğÊ¼Óë³¤¶È)¡£ÈôÖ»Ğè°üÀ¨ T, ÔòÖ»ĞèÒªÎ¬³Ö posCnt == 0
+	For example, S = "ADOBECODEBANC", T = "ABC"
 
-compute the lexicographically smallest permutation of [1,2,....n] given a signature{//
-	signature: eg {3,2,1,6,7,4,5} ==> signature = "DDIIDI" --> ×îĞ¡ permutaion = 3,2,1,4,6,5,7;
-	==> solution O(n): 1. from "DDIIDI" get I[7] = [2,1,0,0,1,0,0] ´ÓÎ²µ½Í·Óö 'D' ¼Ó 1£¬Óö 'I' ¹é 0. 
-		2. ´Ó Min = 1; ¿ªÊ¼Ã¿´ÎÓöµ½ 'D' Ôò nextMin = I[i] + Min + 1; I[i] = Min + I[i]; Ö±µ½¼ÆËãÍêµÚÒ»¸ö I[i] == 0 ºó£¬reset Min = nextMin; Óöµ½ 'I' Ôò I[i] = Min; Min += 1;
-}
+* compute the lexicographically smallest permutation of [1,2,....n] given a signature.  signature: eg {3,2,1,6,7,4,5} ==> signature = "DDIIDI" --> ×îĞ¡ permutaion = 3,2,1,4,6,5,7;
+  * solution O(n): 1. from "DDIIDI" get I[7] = [2,1,0,0,1,0,0] ´ÓÎ²µ½Í·Óö 'D' ¼Ó 1£¬Óö 'I' ¹é 0.  2. ´Ó Min = 1; ¿ªÊ¼Ã¿´ÎÓöµ½ 'D' Ôò nextMin = I[i] + Min + 1; I[i] = Min + I[i]; Ö±µ½¼ÆËãÍêµÚÒ»¸ö I[i] == 0 ºó£¬reset Min = nextMin; Óöµ½ 'I' Ôò I[i] = Min; Min += 1;
 
 
-Given an int array A[n], higher value more candy than neighbor, every A[i] at least got a candy, find the minimum number of candy{
-	==> c[i] Îª i µÄÌÇ¹ûÊı£¬Ôò c[i] ÊÇ min{ > i Á¬Ğøµİ¼õµ½ i ×î³¤´®µÄÊıÄ¿ £¬< i µÄÔªËØÀïÁ¬ĞøµİÔöµ½ i ×î³¤´®µÄÊıÄ¿}
-	¿ÉÒÔ·ÖÁ½±éÉ¨£»c[] ³õÊ¼»¯Îª 1
-1. µÚÒ»±é´ÓÇ°ÏòºóÉ¨ÑÏ¸ñµ¥µ÷ÔöÇø¼ä£¬c[i] = c[i-1]+1;
-2. µÚ¶ş±é´ÓºóÏòÇ°É¨ÑÏ¸ñµ¥µ÷¼õÇø¼ä£¬c[i] = max(c[i],c[i+1]+1);ÆäÖĞc[i]ÊÇµÚÒ»±éÉ¨µ¥ÔöÇø¼äµÄ¸³Öµ£¬c[i+1]+1ÊÇ±¾´ÎÉ¨µ¥¼õÇø¼äµÄ¸³Öµ£»ËÆºõÖ»ÓÃ¿¼ÂÇÉÏ¹Õµã¾Í¿ÉÒÔÁË£¬
-}
+* Given an int array A[n], higher value more candy than neighbor, every A[i] at least got a candy, find the minimum number of candy
+  *  c[i] Îª i µÄÌÇ¹ûÊı£¬Ôò c[i] ÊÇ min{ > i Á¬Ğøµİ¼õµ½ i ×î³¤´®µÄÊıÄ¿ £¬< i µÄÔªËØÀïÁ¬ĞøµİÔöµ½ i ×î³¤´®µÄÊıÄ¿} ¿ÉÒÔ·ÖÁ½±éÉ¨£»c[] ³õÊ¼»¯Îª 1
+  * µÚÒ»±é´ÓÇ°ÏòºóÉ¨ÑÏ¸ñµ¥µ÷ÔöÇø¼ä£¬c[i] = c[i-1]+1;
+  * µÚ¶ş±é´ÓºóÏòÇ°É¨ÑÏ¸ñµ¥µ÷¼õÇø¼ä£¬c[i] = max(c[i],c[i+1]+1);ÆäÖĞc[i]ÊÇµÚÒ»±éÉ¨µ¥ÔöÇø¼äµÄ¸³Öµ£¬c[i+1]+1ÊÇ±¾´ÎÉ¨µ¥¼õÇø¼äµÄ¸³Öµ£»ËÆºõÖ»ÓÃ¿¼ÂÇÉÏ¹Õµã¾Í¿ÉÒÔÁË£¬
+
+* Rotation an array A[n] k position with O(1) space and O(n) time. ¼òµ¥µÄ½â·¨ reverse the whole A[1-n], then reverse A[1-i], A[i+1, -- n] separately
+
+* Largest Rectangle in Histogram. Solution O(n) with stack; stack ±ÈÇ°¸ßµÄÔªËØ height ¼° index £¬Óöµ½µÍµÄÔòÍ³¼ÆÖ®Ç°µÄ. Îª´ËÓ¦ÔÚ input Àï¼Ó×îºóÔªËØ 0
+
+* Trapping Rain Water. Óë Largest Rectangle in Histogram Ïà¶ÔÓ¦£¬Ò×·¸´íÎó: 1. ÕÒ×ó±ß¿ªÊ¼ bar; 2. ÈôÓÒ bar ±È×óbar ¸ßÈçºÎ°ì? Î¬³Ö stack.front() ÎªÄ¿Ç°×î¸ß bar
+
+* Container With Most Water. // Ïë¸´ÔÓÁË, Ó¦¸ÃÊÇ Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+  * Solution: i= 0, j = n - 1; ÄÇÃ´µ±Ç°µÄareaÊÇmin(height[i],height[j]) * (j-i); while (i < j){ if(height[i] < height[j])++i; else --j}
+
+* Maximal Rectangle£¬ÕÒ 0,1 ¾ØÕóÀï 1 ¹¹³ÉµÄ×î´ó×Ó¾ØÕó
+  * solution 1 O(n^3): p(i,j) ¸Ãµã¿ªÊ¼×î´ó¾ØÕó£¬Ã¿ĞĞ±£³ÖÃ¿µã¿ªÊ¼µÄ×î´ó¾àÀë, ÊÔ k >= i; m = min(l_k,l_{k+1}}, µ± m  Îª0 »ò k = n-1 Ê±Í£
+  * solution 2 O(n^2): ÀûÓÃ Largest Rectangle in Histogram£¬ ¶ÔÃ¿ĞĞÕÒÒÔ¸ÃĞĞÎªµ×µÄ×î´ó×Ó¾ØÕó r = 0-->n-1£¬Ã¿ĞĞ O(n). Öù×Ó¸ß¶È¼°Î»ÖÃ¸üĞÂÔÚÑ­»·ÄÚ. ×¢ÒâÔÚ¸ü»»Öù×ÓÊ±£¬ĞÂÖù×ÓµÄ index Òª¸Ä³Épop ³öµÄÖù×ÓµÄ
 
 
-Rotation an array A[n] k position with O(1) space and O(n) time{
-	==> ¼òµ¥µÄ½â·¨ reverse the whole A[1-n], then reverse A[1-i], A[i+1, -- n] separately
-}
+* Maximun sub matrix n*n (2d version of maximum subarray){// Á¬ÔÚÒ»ÆğµÄ
+  * Ë¼Ïë: 1. ±ÜÃâÖØ¸´¼ÆËã; 2. ½«¸ßÎ¬»¯³ÉµÍÎ¬
+   * Blue force O(n6)
+   * solution O(n3): 1. for each column, calculate prefix sum O(n^2); 2. for each pair of rows (rs,re) and each column c calculate f(rs,re,c) as the sum from rs to re in column c. O(n^3); 3. For each (rs,re,*), find the maximum subarray. O(n^3)
+   * extension: d-dimension matrix, maximum submatrix O(n^{2*d-1})
 
-Largest Rectangle in Histogram{
-	==> O(n) with stack; stack ±ÈÇ°¸ßµÄÔªËØ height ¼° index £¬Óöµ½µÍµÄÔòÍ³¼ÆÖ®Ç°µÄ. Îª´ËÓ¦ÔÚ input Àï¼Ó×îºóÔªËØ 0
-}
-
-Trapping Rain Water {
-	==> Óë Largest Rectangle in Histogram Ïà¶ÔÓ¦£¬Ò×·¸´íÎó: 1. ÕÒ×ó±ß¿ªÊ¼ bar; 2. ÈôÓÒ bar ±È×óbar ¸ßÈçºÎ°ì? Î¬³Ö stack.front() ÎªÄ¿Ç°×î¸ß bar
-}
-
-Container With Most Water{// Ïë¸´ÔÓÁË, Ó¦¸ÃÊÇ 
-	Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
-==> Solution: i= 0, j = n - 1; ÄÇÃ´µ±Ç°µÄareaÊÇmin(height[i],height[j]) * (j-i); while (i < j){ if(height[i] < height[j])++i; else --j}
-}
-
-Maximal Rectangle£¬ÕÒ 0,1 ¾ØÕóÀï 1 ¹¹³ÉµÄ×î´ó×Ó¾ØÕó{
-	==> solution 1 O(n^3): p(i,j) ¸Ãµã¿ªÊ¼×î´ó¾ØÕó£¬Ã¿ĞĞ±£³ÖÃ¿µã¿ªÊ¼µÄ×î´ó¾àÀë, ÊÔ k >= i; m = min(l_k,l_{k+1}}, µ± m  Îª0 »ò k = n-1 Ê±Í£
-	==> solution 2 O(n^2): ÀûÓÃ Largest Rectangle in Histogram£¬ ¶ÔÃ¿ĞĞÕÒÒÔ¸ÃĞĞÎªµ×µÄ×î´ó×Ó¾ØÕó r = 0-->n-1£¬Ã¿ĞĞ O(n). Öù×Ó¸ß¶È¼°Î»ÖÃ¸üĞÂÔÚÑ­»·ÄÚ. ×¢ÒâÔÚ¸ü»»Öù×ÓÊ±£¬ĞÂÖù×ÓµÄ index Òª¸Ä³Épop ³öµÄÖù×ÓµÄ
-}
-
-
-Maximun sub matrix n*n (2d version of maximum subarray){// Á¬ÔÚÒ»ÆğµÄ
-	==> Ë¼Ïë: 1. ±ÜÃâÖØ¸´¼ÆËã; 2. ½«¸ßÎ¬»¯³ÉµÍÎ¬
-	==> Blue force O(n6)
-	==> solution O(n3): 1. for each column, calculate prefix sum O(n^2); 2. for each pair of rows (rs,re) and each column c calculate f(rs,re,c) as the sum from rs to re in column c. O(n^3); 3. For each (rs,re,*), find the maximum subarray. O(n^3)
-	==> extension: d-dimension matrix, maximum submatrix O(n^{2*d-1})
-}
-
-Äã¹²ÓĞm¸ö´¢´æ¿Õ¼ä¡£ÓĞn¸öÇëÇó£¬µÚi¸öÇëÇó¼ÆËãÊ±ĞèÒª R[i]¸ö¿Õ¼ä£¬´¢´æ½á¹ûĞèÒªO[i]¸ö¿Õ¼ä(ÆäÖĞO[i]<R[i]), Çó°²ÅÅÕân¸öÇëÇóµÄË³Ğò£¬Ê¹µÃËùÓĞÇëÇó¶¼ÄÜÍê³É{
+* Äã¹²ÓĞm¸ö´¢´æ¿Õ¼ä¡£ÓĞn¸öÇëÇó£¬µÚi¸öÇëÇó¼ÆËãÊ±ĞèÒª R[i]¸ö¿Õ¼ä£¬´¢´æ½á¹ûĞèÒªO[i]¸ö¿Õ¼ä(ÆäÖĞO[i]<R[i]), Çó°²ÅÅÕân¸öÇëÇóµÄË³Ğò£¬Ê¹µÃËùÓĞÇëÇó¶¼ÄÜÍê³É
 	e.g. ÄãµÄËã·¨Ò²Ó¦¸ÃÄÜ¹»ÅĞ¶Ï³öÎŞÂÛÈçºÎ¶¼²»ÄÜ´¦ÀíÍêµÄÇé¿ö¡£±È·½Ëµ£¬m=14£¬n=2£¬R[1]=10£¬O[1]=5£¬R[2]=8£¬O[2]=6
-==> solution ¿¼ÂÇ×î¼òµ¥Çé¿ö(Á½¸ö¹¤×÷) i,j. If run i first: O_i + R_j; if run j first: O_j + R_i; then if O_i + R_j < O_j + R_i, run i first. i.e. run max(R-O) first. 
-}
+  solution ¿¼ÂÇ×î¼òµ¥Çé¿ö(Á½¸ö¹¤×÷) i,j. If run i first: O_i + R_j; if run j first: O_j + R_i; then if O_i + R_j < O_j + R_i, run i first. i.e. run max(R-O) first. 
 
-Having an [infinite] stream of numbers write a function to take an element with equal probability for each{
+* Having an [infinite] stream of numbers write a function to take an element with equal probability for each.
 	ËäÈ»ÊÇÎŞÏŞ£¬µ«ÊÇÎÒÃÇµÃ±£Ö¤Ç° N ¸öÔªËØÃ¿¸ö¸ÅÂÊÊÇ 1/N, ÆäÊµÖ»Òª±£Ö¤µÚ N ¸öÔªËØ(×îĞÂ)»áÓĞ 1/N ¸ÅÂÊ±»Ñ¡¡£¾ßÌå×ö·¨ÊÇ£º  
 	±£³ÖÒ»¸öÒÔÇ°ÔªËØ£¬¼°Êı×é³¤¶È N£¬Ã¿´Î 1-1/N µÄ»ú»á ĞÂÊı ´úÌæ Ç°Êı£¬µ± stream Í£Ö¹Ê±£¬¸ÃÊı¾ÍÊÇËùÑ¡µÄ number  
-}
 
-ÓĞ2*N¸öÎÄ¼ş£¬ÎÄ¼şµÄ´óĞ¡±£´æÔÚsize[2*N]ÖĞ¡£È»ºóÏëÒª·Ö³ÉN·İ(Ã¿Ò»·İ¿ÉÒÔÓĞ1»òÕß¶à¸öÎÄ¼ş)£¬ÒªÊ¹ÕâN·İÖĞµÄÎÄ¼şsizeÖ®ºÍµÄ×î´óÖµ×îĞ¡{
-	==> ½üËÆ½â: sortÒ»±é ´Ó´óÍùĞ¡ÅÅn¸ö È»ºóÊ£ÏÂn¸ö£¬´Ó´óÍùĞ¡£¬¾¡Á¿Èûµ½¸ß¶È×îĞ¡µÄÎÄ¼şÖĞÈ¥
-}
+* ÓĞ2*N¸öÎÄ¼ş£¬ÎÄ¼şµÄ´óĞ¡±£´æÔÚsize[2*N]ÖĞ¡£È»ºóÏëÒª·Ö³ÉN·İ(Ã¿Ò»·İ¿ÉÒÔÓĞ1»òÕß¶à¸öÎÄ¼ş)£¬ÒªÊ¹ÕâN·İÖĞµÄÎÄ¼şsizeÖ®ºÍµÄ×î´óÖµ×îĞ¡
+  * ½üËÆ½â: sortÒ»±é ´Ó´óÍùĞ¡ÅÅn¸ö È»ºóÊ£ÏÂn¸ö£¬´Ó´óÍùĞ¡£¬¾¡Á¿Èûµ½¸ß¶È×îĞ¡µÄÎÄ¼şÖĞÈ¥
 
-Á½¸öÅÅĞòºÃµÄÊı×é  ÇóºÍ×îĞ¡µÄm¸öpair{//
+* Á½¸öÅÅĞòºÃµÄÊı×é  ÇóºÍ×îĞ¡µÄm¸öpair
 	1) insert A[0] B[0]
 	2) pop up the smallest, insert A[1]B[0],A[0]B[1]
 	3) pop up the smallestA[i]B[j] , insert A[i+1]B[j],A[i]B[j+1]... 	until u get m
-	==>  ÓĞµãÏñ Young matrix£¬·´¶Ô½ÇÏß½øĞĞ O(m)
-}
+  * ÓĞµãÏñ Young matrix£¬·´¶Ô½ÇÏß½øĞĞ O(m)
 
-Given an array A of N integers, where A[i] is the radio at i, find the number of intersecting pairs{
-	e.g. A = {1,5,2,1,4,0} ¹²ÓĞ 11 ¶Ô
-	==> solution: time O(n) + space O(min(n,radio)). µÚÒ»±éÉ¨Ãè c[i] ±íÊ¾ ×ó±ßµ½´ï i µÄ¸öÊı (²»°üÀ¨ i ±¾Éí). µÚ¶ş±é sum up: m(i) := min(i,A[i]); sum += m(i) + c[A[i]-m(i)] 
-}
+* Given an array A of N integers, where A[i] is the radio at i, find the number of intersecting pairs e.g. A = {1,5,2,1,4,0} ¹²ÓĞ 11 ¶Ô
+  *solution: time O(n) + space O(min(n,radio)). µÚÒ»±éÉ¨Ãè c[i] ±íÊ¾ ×ó±ßµ½´ï i µÄ¸öÊı (²»°üÀ¨ i ±¾Éí). µÚ¶ş±é sum up: m(i) := min(i,A[i]); sum += m(i) + c[A[i]-m(i)] 
 
-Given an unsorted array of integers, find the length of the longest consecutive elements sequence.{
-	==> O(n): 1. ËùÓĞÔªËØÈë unordered_set, 2.ÈÎÈ¡Ò»ÔªËØ v, °´ v+1 up, v-1 down ÔÚ set ÖĞ²éÕÒ£¬Óöµ½Ëù²éÔªËØ count 1 ²¢ÏûÈ¥ 
-}
+* Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+  * solution O(n): 1. ËùÓĞÔªËØÈë unordered_set, 2.ÈÎÈ¡Ò»ÔªËØ v, °´ v+1 up, v-1 down ÔÚ set ÖĞ²éÕÒ£¬Óöµ½Ëù²éÔªËØ count 1 ²¢ÏûÈ¥ 
 
-½«Êé×éÀïµÄËùÓĞ¸ºÊıÅÅÔÚËùÓĞÕıÊıÇ°Ãæ£¬±£³ÖÕıÊıºÍ¸ºÊıÔ­À´µÄÏà¶ÔË³Ğò²»±ä inplace Ê±¼ä¸´ÔÓ¶ÈÔ½µÍÔ½ºÃ{// ???
-	eg: input -5 2 -3 4 -8 -9 1 3 -10;  output -5 -3 -8 -9 -10 2 4 1 3.
-	==> ·½·¨ÀàËÆÓÚ°ÑÒ»ÆªÎÄÕÂÒÔµ¥´ÊÎªµ¥Î»Í·Î²µ÷»». nlogn
-}
+* ½«Êé×éÀïµÄËùÓĞ¸ºÊıÅÅÔÚËùÓĞÕıÊıÇ°Ãæ£¬±£³ÖÕıÊıºÍ¸ºÊıÔ­À´µÄÏà¶ÔË³Ğò²»±ä inplace Ê±¼ä¸´ÔÓ¶ÈÔ½µÍÔ½ºÃ.  eg: input -5 2 -3 4 -8 -9 1 3 -10;  output -5 -3 -8 -9 -10 2 4 1 3.
+	·½·¨ÀàËÆÓÚ°ÑÒ»ÆªÎÄÕÂÒÔµ¥´ÊÎªµ¥Î»Í·Î²µ÷»». nlogn
 
-Palindrome Partitioning{// given a string, ·Ö½â³É Èô¸É palindrome strings. (1) Çó³öËùÓĞ¿ÉÄÜµÄ×éºÏ (2) ÕÒ³ö substring ÊıÄ¿×îÉÙµÄÇĞ¸î 2013.09.13
-	--> Ë¼Â· DP: ¹¹Ôì¶şÎ¬ bool p(i,j), substring[i,j) is palindrome. µİ¹é p(i,j) = p(i+1,j-1) && a[i] == a[j-1]; ´Ó¾ØÕó×óÏÂ½Ç¿ªÊ¼; ±ß½ç p(i,j) = true if i+1 >= j; 
+* Palindrome Partitioning. // given a string, ·Ö½â³É Èô¸É palindrome strings. (1) Çó³öËùÓĞ¿ÉÄÜµÄ×éºÏ (2) ÕÒ³ö substring ÊıÄ¿×îÉÙµÄÇĞ¸î 2013.09.13. Ë¼Â· DP: ¹¹Ôì¶şÎ¬ bool p(i,j), substring[i,j) is palindrome. µİ¹é p(i,j) = p(i+1,j-1) && a[i] == a[j-1]; ´Ó¾ØÕó×óÏÂ½Ç¿ªÊ¼; ±ß½ç p(i,j) = true if i+1 >= j; 
+```
 		vector<int> Split(bool * p, int size){
 		}
 		
@@ -559,12 +506,13 @@ Palindrome Partitioning{// given a string, ·Ö½â³É Èô¸É palindrome strings. (1) Ç
       	}
       }
       for(int i = 1; i < n; ++i){
-      	
       result = partition(string(s.begin()+1,s.end()));  
+      }
     }	
-}
+```
 
-Reverse Nodes in k-Group{// 2013.09.23 VC Í¨¹ı£¬µ«ÎŞ·¨Í¨¹ı LeetCode
+* Reverse Nodes in k-Group // 2013.09.23 VC Í¨¹ı£¬µ«ÎŞ·¨Í¨¹ı LeetCode
+```
     int reverseKGroupSub(ListNode*&head,int k,ListNode*&PreEnd){// return reverse number
         if(k <= 1 || head == 0) return 0;
         int SwapNum = 1;
@@ -598,9 +546,10 @@ Reverse Nodes in k-Group{// 2013.09.23 VC Í¨¹ı£¬µ«ÎŞ·¨Í¨¹ı LeetCode
         }
 		return PreHead.next;
     }
-}
+```
 
-Remove Element that equal to a given value{ // LeetCode ²»ÄÜÍ¨¹ı [2,2,3], 2, µ« VC µ÷ÊÔÃ»ÓĞÎÊÌâ
+* Remove Element that equal to a given value // LeetCode ²»ÄÜÍ¨¹ı [2,2,3], 2, µ« VC µ÷ÊÔÃ»ÓĞÎÊÌâ
+```
   int removeElement(int A[], int n, int elem) {// 2013.09.23 
       if(n == 0) return 0;
       int s = A[0] == elem? 0:1;
@@ -609,9 +558,9 @@ Remove Element that equal to a given value{ // LeetCode ²»ÄÜÍ¨¹ı [2,2,3], 2, µ« 
       }
       return s;
   }
-}
+```
 
-Remove Duplicates from Sorted Array{
+* Remove Duplicates from Sorted Array
     int removeDuplicates(int A[], int n) {// 2013.09.23 ÎŞ´íÍ¨¹ı
         if(n == 0) return 0;
         int newLen = 0;
@@ -622,9 +571,10 @@ Remove Duplicates from Sorted Array{
         }
         return newLen+1;
     }
-}
+```
 
-Remove Duplicates from Sorted List{// 2013.05.02 8:06pm 8:09pm ÎŞ´íÍ¨¹ı
+* Remove Duplicates from Sorted List // 2013.05.02 8:06pm 8:09pm ÎŞ´íÍ¨¹ı
+```
     ListNode *deleteDuplicates(ListNode *head) {
         if(!head) return NULL;
         ListNode* pre = head;
@@ -637,9 +587,10 @@ Remove Duplicates from Sorted List{// 2013.05.02 8:06pm 8:09pm ÎŞ´íÍ¨¹ı
         }
         return head;
     }	
-}
+```
 
-Remove Duplicates from Sorted List II{// 2013.05.02 8:10pm VC µ÷´í 8:37pm 
+* Remove Duplicates from Sorted List II // 2013.05.02 8:10pm VC µ÷´í 8:37pm 
+```
     ListNode *deleteDuplicates(ListNode *head) {
         if(!head) return NULL;
         ListNode tempN(0);
@@ -663,9 +614,10 @@ Remove Duplicates from Sorted List II{// 2013.05.02 8:10pm VC µ÷´í 8:37pm
         }
         return tempN.next;        
     }	
-}
+```
     
-Reverse Linked List II{// 2013.05.02
+* Reverse Linked List II // 2013.05.02
+```
     ListNode *reverseBetween(ListNode *head, int m, int n) {// ĞèÒª VC ÕÒ´íÎó
         if(m >= n || !head) return head;
         ListNode tempNode(0);
@@ -704,9 +656,10 @@ Reverse Linked List II{// 2013.05.02
 	    int v = H->val; H->val = T->val; T->val = v;
 	    return head;
 	}
-}
+```
 
-Reverse Nodes in k-Group{// ²»¹»µÄ²»ÓÃ½»»» // ÎŞ´íÍ¨¹ı! 2013.05.02
+* Reverse Nodes in k-Group// ²»¹»µÄ²»ÓÃ½»»» // ÎŞ´íÍ¨¹ı! 2013.05.02
+```
     ListNode *reverseKGroup(ListNode *head, int k) {
         if(!head || k <= 1) return head;
         ListNode tempN(0);
@@ -736,9 +689,10 @@ Reverse Nodes in k-Group{// ²»¹»µÄ²»ÓÃ½»»» // ÎŞ´íÍ¨¹ı! 2013.05.02
         }        
         return tempN.next;        
     }
-}
+```
 
-Remove Nth Node From End of List{// ÎŞ´íÍ¨¹ı 2013.05.02, µ« 2013.09.21 ÓĞ´í
+* Remove Nth Node From End of List.// ÎŞ´íÍ¨¹ı 2013.05.02, µ« 2013.09.21 ÓĞ´í
+```
     ListNode *removeNthFromEnd(ListNode *head, int n) {
         if(!head || n <= 0) return head;
         ListNode PreHead(0);
@@ -757,12 +711,10 @@ Remove Nth Node From End of List{// ÎŞ´íÍ¨¹ı 2013.05.02, µ« 2013.09.21 ÓĞ´í
         return PreHead.next;
         
     }
-}
+```
 
-Partition List{// VC ²é´í 2013.05.02
-// ´íÎóÒ»: ½»»» linked list ÄÚÁ½µã£¬ÏàÁÚÊ±ÓÃ pre->next->next »áÓĞÂé·³
-// ´íÎó¶ş: Ëã·¨Éè¼Æ´íÎó, ²»ÊÇ½»»»Á½µã£¬¶øÊÇ¸Ä±äËÄ¸öÁ´½Ó
-
+Partition List: ´íÎóÒ»: ½»»» linked list ÄÚÁ½µã£¬ÏàÁÚÊ±ÓÃ pre->next->next »áÓĞÂé·³; ´íÎó¶ş: Ëã·¨Éè¼Æ´íÎó, ²»ÊÇ½»»»Á½µã£¬¶øÊÇ¸Ä±äËÄ¸öÁ´½Ó.
+```
     ListNode *partition(ListNode *head, int x) {
         if(!head)return NULL;
         ListNode L(0),GE(0);
@@ -786,9 +738,10 @@ Partition List{// VC ²é´í 2013.05.02
        		return GE.next;
        	}
     }
-}
+```
 
-Merge Two Sorted Lists{// ³ö´í && Ğ´³É & 2013.05.02 // ÅĞ¶ÏÖ¸ÕëÊÇ·ñÎª null Ê±È¡·´ÁË, e.g while(!p){}; Ó¦Îª while(p){}
+* Merge Two Sorted Lists // ³ö´í && Ğ´³É & 2013.05.02 // ÅĞ¶ÏÖ¸ÕëÊÇ·ñÎª null Ê±È¡·´ÁË, e.g while(!p){}; Ó¦Îª while(p){}
+```
     ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
         ListNode tempN(0);
         ListNode* pre = &tempN;
@@ -805,9 +758,10 @@ Merge Two Sorted Lists{// ³ö´í && Ğ´³É & 2013.05.02 // ÅĞ¶ÏÖ¸ÕëÊÇ·ñÎª null Ê±È¡·
         pre->next = l1?l1:l2;
         return tempN.next;
     }
-}
+```
 
-Merge k Sorted Lists{// ÓÃ VC µ÷³ö´íÎó 2013.05.02
+* Merge k Sorted Lists// ÓÃ VC µ÷³ö´íÎó 2013.05.02
+```
     ListNode *mergeKLists(vector<ListNode *> &lists) {
         ListNode PreNode(0);        
         deque<ListNode*> MinHeap;        
@@ -858,10 +812,11 @@ Merge k Sorted Lists{// ÓÃ VC µ÷³ö´íÎó 2013.05.02
             }
         }while(1);
     }	
-}
+```
 
-Rotate List{//Ã»ÓĞÍê³É 2013.05.02 10:42pm
-	    ListNode *rotateRight(ListNode *head, int k) {
+* Rotate List //Ã»ÓĞÍê³É 2013.05.02 10:42pm
+```
+    ListNode *rotateRight(ListNode *head, int k) {
         if(!head || k <= 0) return head;                
         ListNode*last = head;
         while(k-- && last->next){
@@ -880,12 +835,12 @@ Rotate List{//Ã»ÓĞÍê³É 2013.05.02 10:42pm
         prev->next->next = NULL;
         return tempN.next;
     }
-}
+```
 
-Regular Expression Matching with support for '.' and '*'{// 
-	==> ×¢Òâ¶Ô "*" Àí½â´íÎó, ÕıÈ·ÊÇ±íÊ¾¶Ô"Ç°Ãæ"×Ö·ûµÄÈÎÒâ´Î(°üÀ¨ 0)µÄÖØ¸´
-	==> Do NOT working: ÓÃ DP, ¼´ str Óë pattern µÄ×î³¤¹«¹²×Ö´®, ²»ÒªÓÃÕıÏò recursive, ÒòÎª complexity Îª exponential. pattern ±ØĞë ±í´ïÎ¨Ò», eg. b*b ²»ºÏ·¨£¬¶ø bb* ºÏ·¨
-	
+* Regular Expression Matching with support for '.' and '*'
+  * ×¢Òâ¶Ô "*" Àí½â´íÎó, ÕıÈ·ÊÇ±íÊ¾¶Ô"Ç°Ãæ"×Ö·ûµÄÈÎÒâ´Î(°üÀ¨ 0)µÄÖØ¸´
+  * Do NOT working: ÓÃ DP, ¼´ str Óë pattern µÄ×î³¤¹«¹²×Ö´®, ²»ÒªÓÃÕıÏò recursive, ÒòÎª complexity Îª exponential. pattern ±ØĞë ±í´ïÎ¨Ò», eg. b*b ²»ºÏ·¨£¬¶ø bb* ºÏ·¨
+```	
 	bool isMatch(const char *s, int slen, const char *p, plen){
 		int si = 0, pi = 0;
 		while(si < slen && pi < plen){
@@ -904,11 +859,11 @@ Regular Expression Matching with support for '.' and '*'{//
 		if(pi == plen) return si == slen;
 		return false;
 	}
-}
+```	
 
-Æ¥ÅäÈËÃû Í¨Åä·û * and ?; e.g. ¡°J* Smi??¡± ¿ÉÒÔÆ¥Åä¡°John Smith¡±{
-==> solution: ·Ö¿ª *, ? , ÈıÖÖÇé¿ö ÌÖÂÛ how to handle J*ss Jesass, 
-
+* Æ¥ÅäÈËÃû Í¨Åä·û * and ?; e.g. ¡°J* Smi??¡± ¿ÉÒÔÆ¥Åä¡°John Smith¡±
+  * solution: ·Ö¿ª *, ? , ÈıÖÖÇé¿ö ÌÖÂÛ how to handle J*ss Jesass, 
+```
 bool IsFit(const char* txt, int txtSize, const char* pat, int patSize){// recursive, ´íÎó const char* ²»ÄÜ¸³Öµ¸ø¡¡char*
 	int patPos,shift;
 	if(txtSize == 0){// empty text
@@ -938,59 +893,49 @@ bool IsFit(const char* txt, int txtSize, const char* pat, int patSize){// recurs
 		if(IsFit(txt+shift+1,txtSize-shift-1,pat+patPos+1,patSize-patPos-1)) return true; // return the shift result
 	}while(1);
 }
+```
 
-}
+* String Matching Problem
+  * Solution 1: Knuth¨CMorris¨CPratt algorithm(KMP): build index for search pattern, p[i] is that if i th charactor fails, which index should go to 
+  * Solution 2: Trie tree: prefix tree for suffix, good for large number of small patterns, 
+  * Solution 3: Rabin¨CKarp hash: build hash functions (rolling hash, fixed lengths as the searched patterns) for patters and each substring of the text. good for search multiple patterns. e.g f(str) = str[0]+str[1]*p+...+ str[k-1]*p^(k-1), where p is a large prime
 
-String Matching Problem{
-==> Solution 1: Knuth¨CMorris¨CPratt algorithm(KMP): build index for search pattern, p[i] is that if i th charactor fails, which index should go to 
-==> Solution 2: Trie tree: prefix tree for suffix, good for large number of small patterns, 
-==> Solution 3: Rabin¨CKarp hash: build hash functions (rolling hash, fixed lengths as the searched patterns) for patters and each substring of the text. good for search multiple patterns. e.g f(str) = str[0]+str[1]*p+...+ str[k-1]*p^(k-1), where p is a large prime
-}
-
-copy LinkedList{ where m_pSibling Ö¸ÏòÁ´±íÖĞµÄÈÎÒ»½áµã»òÕßNULL¡£Æä½áµãµÄC++¶¨ÒåÈçÏÂ£º
-	 struct ComplexNode
+* copy LinkedList, where m_pSibling Ö¸ÏòÁ´±íÖĞµÄÈÎÒ»½áµã»òÕßNULL¡£Æä½áµãµÄC++¶¨ÒåÈçÏÂ£º
+```
+	struct ComplexNode
 	{
 	    int m_nValue;
 	    ComplexNode* m_pNext;
 	    ComplexNode* m_pSibling;
 	};
+```
+  * Solution: copy each oldnode (recursively, then next can be copied to new node), with the newnode->next = oldnode, and oldnode->next = newnode; 2. update noldnode->next->sibling = oldnode->next->next ¼´ĞÂµãµÄ sibling update, 3. ĞÂµã´Ó¾ÉµãÖĞ½âÍÑ³öÀ´ 
 
-	==> Solution: copy each oldnode (recursively, then next can be copied to new node), with the newnode->next = oldnode, and oldnode->next = newnode; 2. update noldnode->next->sibling = oldnode->next->next ¼´ĞÂµãµÄ sibling update, 3. ĞÂµã´Ó¾ÉµãÖĞ½âÍÑ³öÀ´ 
+* reverse Polish Expression: 1 + 2 * 3 = 2 3 * 1 +;
+  * ÓÃ¸¨Öú stack ÈëÊı£¬Ã¿¶Áµ½Ò»¸öÔËËã·û´Ó stack ÖĞÈ¡µÃÁ½Êı¼ÆËã
+
+* Á´±íÎÊÌâµÄÃæÊÔÌâÄ¿
+  * ¸ø¶¨µ¥Á´±í£¬¼ì²âÊÇ·ñÓĞ»·
+    * Solution: Ê¹ÓÃÁ½¸öÖ¸Õëp1,p2´ÓÁ´±íÍ·¿ªÊ¼±éÀú£¬p1Ã¿´ÎÇ°½øÒ»²½£¬p2Ã¿´ÎÇ°½øÁ½²½¡£Èç¹ûp2µ½´ïÁ´±íÎ²²¿£¬ËµÃ÷ÎŞ»·£¬·ñÔòp1¡¢p2±ØÈ»»áÔÚÄ³¸öÊ±¿ÌÏàÓö(p1==p2)£¬´Ó¶ø¼ì²âµ½Á´±íÖĞÓĞ»·¡£
+
+  * ¸ø¶¨Á½¸öµ¥Á´±í(head1, head2)£¬¼ì²âÁ½¸öÁ´±íÊÇ·ñÓĞ½»µã£¬Èç¹ûÓĞ·µ»ØµÚÒ»¸ö½»µã, ×¢Òâ L1, L2 ¿ÉÄÜÓĞ circle. 
+    * Solution: Èç¹ûhead1==head2£¬ÄÇÃ´ÏÔÈ»Ïà½»£¬Ö±½Ó·µ»Øhead1¡£·ñÔò£¬·Ö±ğ´Óhead1,head2¿ªÊ¼±éÀúÁ½¸öÁ´±í»ñµÃÆä³¤¶Èlen1Óëlen2£¬¼ÙÉèlen1>=len2£¬ÄÇÃ´Ö¸Õëp1ÓÉhead1¿ªÊ¼ÏòºóÒÆ¶¯len1-len2²½£¬Ö¸Õëp2=head2£¬ÏÂÃæp1¡¢p2Ã¿´ÎÏòºóÇ°½øÒ»²½²¢±È½Ïp1p2ÊÇ·ñÏàµÈ£¬Èç¹ûÏàµÈ¼´·µ»Ø¸Ã½áµã£¬·ñÔòËµÃ÷Á½¸öÁ´±íÃ»ÓĞ½»µã¡£
+  * ¸ø¶¨µ¥Á´±í(head)£¬Èç¹ûÓĞ»·µÄ»°Çë·µ»Ø´ÓÍ·½áµã½øÈë»·µÄµÚÒ»¸ö½Úµã¡£
+    * ÎÒÃÇ¿ÉÒÔ¼ì²éÁ´±íÖĞÊÇ·ñÓĞ»·¡£Èç¹ûÓĞ»·£¬ÄÇÃ´p1p2ÖØºÏµãp±ØÈ»ÔÚ»·ÖĞ¡£´Ópµã¶Ï¿ª»·£¬·½·¨Îª£ºp1=p, p2=p->next, p->next=NULL¡£´ËÊ±£¬Ô­µ¥Á´±í¿ÉÒÔ¿´×÷Á½Ìõµ¥Á´±í£¬Ò»Ìõ´Óhead¿ªÊ¼£¬ÁíÒ»Ìõ´Óp2¿ªÊ¼£¬ÓÚÊÇÔËÓÃÌâ¶şµÄ·½·¨£¬ÎÒÃÇÕÒµ½ËüÃÇµÄµÚÒ»¸ö½»µã¼´ÎªËùÇó¡£
+  * ÅĞ¶ÏÒ»¸ö linkedlist ÊÇ·ñÊÇ palindrome
+  * °ÑÒ»¸ö linkedlist ¶ÔÕÛµØÏà¸ô±ä»»³ÉÒ»¸öĞÂ linkedlist
+
+  * ÒÔÏÂÁ½Ìâ¿ÉÒÔ½«¾É½Úµã×ª»¯³ÉĞÂ½Úµã
+  * Ö»¸ø¶¨µ¥Á´±íÖĞÄ³¸ö½áµãp(²¢·Ç×îºóÒ»¸ö½áµã£¬¼´p->next!=NULL)Ö¸Õë£¬É¾³ı¸Ã½áµã¡£ solution: Ê×ÏÈÊÇ·ÅpÖĞÊı¾İ,È»ºó½«p->nextµÄÊı¾İcopyÈëpÖĞ£¬½ÓÏÂÀ´É¾³ıp->next¼´¿É¡£
+
+  * Ö»¸ø¶¨µ¥Á´±íÖĞÄ³¸ö½áµãp(·Ç¿Õ½áµã)£¬ÔÚpÇ°Ãæ²åÈëÒ»¸ö½áµã¡£ solution: °ì·¨ÓëÇ°ÕßÀàËÆ£¬Ê×ÏÈ·ÖÅäÒ»¸ö½áµãq£¬½«q²åÈëÔÚpºó£¬½ÓÏÂÀ´½«pÖĞµÄÊı¾İcopyÈëqÖĞ£¬È»ºóÔÙ½«Òª²åÈëµÄÊı¾İ¼ÇÂ¼ÔÚpÖĞ¡£	
+
+  *  ÒÔÏÂÓÃµ½×Ö·û´®µÄ signature
+  * Given a string S and a list of words (same length) L. Find all starting indices of substring(s) in S that is a concatenation of each word in L exactly once and without any intervening character.
+    * solution: O(n) 1. ÓÃ unordered_set Ê¹²éÑ¯ÊÇ·ñÔÚ list ÀïÎª O(1); 2. DP Î¬³Ö word.size() ¸ö deque<bool> queue£¬Q[i] ±íÊ¾´Ó i ¿ªÊ¼ÒÑ¾­³öÏÖµÄ words, »¹ÓĞ vector<bool> Appear(word.size(),false)
 }
 
-reverse Polish Expression{
-	1 + 2 * 3 = 2 3 * 1 +;
-	==> ÓÃ¸¨Öú stack ÈëÊı£¬Ã¿¶Áµ½Ò»¸öÔËËã·û´Ó stack ÖĞÈ¡µÃÁ½Êı¼ÆËã
-}
-
-Á´±íÎÊÌâµÄÃæÊÔÌâÄ¿{
-1.¸ø¶¨µ¥Á´±í£¬¼ì²âÊÇ·ñÓĞ»·
-	==> Solution: Ê¹ÓÃÁ½¸öÖ¸Õëp1,p2´ÓÁ´±íÍ·¿ªÊ¼±éÀú£¬p1Ã¿´ÎÇ°½øÒ»²½£¬p2Ã¿´ÎÇ°½øÁ½²½¡£Èç¹ûp2µ½´ïÁ´±íÎ²²¿£¬ËµÃ÷ÎŞ»·£¬·ñÔòp1¡¢p2±ØÈ»»áÔÚÄ³¸öÊ±¿ÌÏàÓö(p1==p2)£¬´Ó¶ø¼ì²âµ½Á´±íÖĞÓĞ»·¡£
-
-2.¸ø¶¨Á½¸öµ¥Á´±í(head1, head2)£¬¼ì²âÁ½¸öÁ´±íÊÇ·ñÓĞ½»µã£¬Èç¹ûÓĞ·µ»ØµÚÒ»¸ö½»µã, ×¢Òâ L1, L2 ¿ÉÄÜÓĞ circle. 
-	==> Solution: Èç¹ûhead1==head2£¬ÄÇÃ´ÏÔÈ»Ïà½»£¬Ö±½Ó·µ»Øhead1¡£·ñÔò£¬·Ö±ğ´Óhead1,head2¿ªÊ¼±éÀúÁ½¸öÁ´±í»ñµÃÆä³¤¶Èlen1Óëlen2£¬¼ÙÉèlen1>=len2£¬ÄÇÃ´Ö¸Õëp1ÓÉhead1¿ªÊ¼ÏòºóÒÆ¶¯len1-len2²½£¬Ö¸Õëp2=head2£¬ÏÂÃæp1¡¢p2Ã¿´ÎÏòºóÇ°½øÒ»²½²¢±È½Ïp1p2ÊÇ·ñÏàµÈ£¬Èç¹ûÏàµÈ¼´·µ»Ø¸Ã½áµã£¬·ñÔòËµÃ÷Á½¸öÁ´±íÃ»ÓĞ½»µã¡£
-
-
-3.¸ø¶¨µ¥Á´±í(head)£¬Èç¹ûÓĞ»·µÄ»°Çë·µ»Ø´ÓÍ·½áµã½øÈë»·µÄµÚÒ»¸ö½Úµã¡£
-	==> ÎÒÃÇ¿ÉÒÔ¼ì²éÁ´±íÖĞÊÇ·ñÓĞ»·¡£Èç¹ûÓĞ»·£¬ÄÇÃ´p1p2ÖØºÏµãp±ØÈ»ÔÚ»·ÖĞ¡£´Ópµã¶Ï¿ª»·£¬·½·¨Îª£ºp1=p, p2=p->next, p->next=NULL¡£´ËÊ±£¬Ô­µ¥Á´±í¿ÉÒÔ¿´×÷Á½Ìõµ¥Á´±í£¬Ò»Ìõ´Óhead¿ªÊ¼£¬ÁíÒ»Ìõ´Óp2¿ªÊ¼£¬ÓÚÊÇÔËÓÃÌâ¶şµÄ·½·¨£¬ÎÒÃÇÕÒµ½ËüÃÇµÄµÚÒ»¸ö½»µã¼´ÎªËùÇó¡£
-
-3.2 ÅĞ¶ÏÒ»¸ö linkedlist ÊÇ·ñÊÇ palindrome
-
-3.3 °ÑÒ»¸ö linkedlist ¶ÔÕÛµØÏà¸ô±ä»»³ÉÒ»¸öĞÂ linkedlist
-
-// ÒÔÏÂÁ½Ìâ¿ÉÒÔ½«¾É½Úµã×ª»¯³ÉĞÂ½Úµã
-4.Ö»¸ø¶¨µ¥Á´±íÖĞÄ³¸ö½áµãp(²¢·Ç×îºóÒ»¸ö½áµã£¬¼´p->next!=NULL)Ö¸Õë£¬É¾³ı¸Ã½áµã¡£
-	==> Ê×ÏÈÊÇ·ÅpÖĞÊı¾İ,È»ºó½«p->nextµÄÊı¾İcopyÈëpÖĞ£¬½ÓÏÂÀ´É¾³ıp->next¼´¿É¡£
-
-5.Ö»¸ø¶¨µ¥Á´±íÖĞÄ³¸ö½áµãp(·Ç¿Õ½áµã)£¬ÔÚpÇ°Ãæ²åÈëÒ»¸ö½áµã¡£
-  ==> °ì·¨ÓëÇ°ÕßÀàËÆ£¬Ê×ÏÈ·ÖÅäÒ»¸ö½áµãq£¬½«q²åÈëÔÚpºó£¬½ÓÏÂÀ´½«pÖĞµÄÊı¾İcopyÈëqÖĞ£¬È»ºóÔÙ½«Òª²åÈëµÄÊı¾İ¼ÇÂ¼ÔÚpÖĞ¡£	
-}
-
-// ÒÔÏÂÓÃµ½×Ö·û´®µÄ signature
-Given a string S and a list of words (same length) L. Find all starting indices of substring(s) in S that is a concatenation of each word in L exactly once and without any intervening characters{
-	==> solution: O(n) 1. ÓÃ unordered_set Ê¹²éÑ¯ÊÇ·ñÔÚ list ÀïÎª O(1); 2. DP Î¬³Ö word.size() ¸ö deque<bool> queue£¬Q[i] ±íÊ¾´Ó i ¿ªÊ¼ÒÑ¾­³öÏÖµÄ words, »¹ÓĞ vector<bool> Appear(word.size(),false)
-}
-
+```
 Substring with Concatenation of All Words{ 
      vector<int> findSubstring(string S, vector<string> &L) {// L is not empty
         // ²»ÄÜÓÃÓÚ S:"a"; L: ["a","a"], ĞèÒªÓÃµ½ unordered_multiset
@@ -1017,45 +962,37 @@ Substring with Concatenation of All Words{
         return result;
     }
 }
+```
 
-You have k lists of sorted integers. Find the smallest range that includes at least one number from each of the k lists.{
-	==> solution: update the array with the smallest first element
+* You have k lists of sorted integers. Find the smallest range that includes at least one number from each of the k lists.
+  * solution: update the array with the smallest first element
 	For example,
 	List 1: [4, 10, 15, 24, 26]
 	List 2: [0, 9, 12, 20]
 	List 3: [5, 18, 22, 30] 
-}
 
-very large byte stream (PB) synchronization algorithm{
-	given:
-	unsigned char read_byte(); ¡û side effect that it advances a byte pointer in the stream
-	write:
-	unsigned char read_sync_byte(); ¡û may result in >1 calls to read_byte()
-	
+* very large byte stream (PB) synchronization algorithm. given unsigned char read_byte(); ¡û side effect that it advances a byte pointer in the stream
+	write unsigned char read_sync_byte(); ¡û may result in >1 calls to read_byte()
+```	
 	remove byte '03' from the stream if the stream is in pattern 00 00 03
 	read_byte():
 	00 0f 42 17 00 00 03 74 00 00 00 00 14 ...
 	read_sync_byte():
 	00 0f 42 17 00 00 74 00 00 00 00 14
+```	
 	
-	==> solution: ÓÃ ring buffer, Buffer[0-5], start, len; if str[cur] == pattern[len], ++len; else read out; if len == pattern,
-	==> solution: int pre00cnt = 0; if( byte == '00'){pre00cnt +=1; if(pre00cnt == 3) pre00cnt = 2;} else pre00cnt = 0; if(pre00cnt == 2 && byte == "03") continue;
-}
+  * solution: ÓÃ ring buffer, Buffer[0-5], start, len; if str[cur] == pattern[len], ++len; else read out; if len == pattern,
+  * solution: int pre00cnt = 0; if( byte == '00'){pre00cnt +=1; if(pre00cnt == 3) pre00cnt = 2;} else pre00cnt = 0; if(pre00cnt == 2 && byte == "03") continue;
 
-¸øÒ»¸ö string ±íÊ¾µÄ number, ÅĞ¶ÏÊÇ·ñÊÇ "aggregated number"{
-	// ¶¨Òå ·Ö½â³É Ò»¸öÊıÁĞ£¬Ê¹Ö®Âú×ã a[i+2] = a[i] + a[i+1]; like 112358, because 1+1=2, 1+2=3, 2+3=5, 3+5=8 ¿ÉÒÔ¼Ù¶¨ a[1] > a[0]
-	==> solution: µ±Ã¿Ò»¸öÊı¼°µÚ¶ş¸öÊı¶¨ÏÂÀ´Ê±£¬ÊıÁĞÍêÈ«¶¨ÏÂÀ´ÁË¡£d(i,j) Á½Î¬ DP
-}
+* ¸øÒ»¸ö string ±íÊ¾µÄ number, ÅĞ¶ÏÊÇ·ñÊÇ "aggregated number". e.g.·Ö½â³É Ò»¸öÊıÁĞ£¬Ê¹Ö®Âú×ã a[i+2] = a[i] + a[i+1]; like 112358, because 1+1=2, 1+2=3, 2+3=5, 3+5=8 ¿ÉÒÔ¼Ù¶¨ a[1] > a[0]
+  * solution: µ±Ã¿Ò»¸öÊı¼°µÚ¶ş¸öÊı¶¨ÏÂÀ´Ê±£¬ÊıÁĞÍêÈ«¶¨ÏÂÀ´ÁË¡£d(i,j) Á½Î¬ DP
 
-Google Scramble String{
-	Scramble string, for two strings, say s1 = ¡°tiger¡± and s2 = ¡°itreg¡±
-	==> recursive, exponential, µ«ÊÇÈç¹ûÏÈ¼ì²é×ÖÄ¸Êı»áºÜ¿ì
-	==> Without Duplicated characters: merge interger interval
-	==> solution: logically ajacent {1,0,4,3,2} ÓÃ map<char,int> Óë vector<int> ÕÒÏà¶Ô index; ÓÃ vector<int> Left,Right ºÏ²¢Çø¼ä. 
-	×ª»» index µÄ´úÂë£¬ÓÃ deque push_back ¼ÇÂ¼ÔÚs1 ³öÏÖµÄ index, ¶Ô s2 ÓÃ deque front pop, ²»ÓÃÓÃ map, ÒòÎª×ÖÄ¸ÊıÒ»Ñù
+* Google Scramble String. Scramble string, for two strings, say s1 = ¡°tiger¡± and s2 = ¡°itreg¡±. recursive, exponential, µ«ÊÇÈç¹ûÏÈ¼ì²é×ÖÄ¸Êı»áºÜ¿ì.  Without Duplicated characters: merge interger interval
+  * solution: logically ajacent {1,0,4,3,2} ÓÃ map<char,int> Óë vector<int> ÕÒÏà¶Ô index; ÓÃ vector<int> Left,Right ºÏ²¢Çø¼ä.  ×ª»» index µÄ´úÂë£¬ÓÃ deque push_back ¼ÇÂ¼ÔÚs1 ³öÏÖµÄ index, ¶Ô s2 ÓÃ deque front pop, ²»ÓÃÓÃ map, ÒòÎª×ÖÄ¸ÊıÒ»Ñù, ²»¿ÉÓÃÓÚÓĞ duplicate µÄ e.g. s1 = "aabbbaccd", s2 = "aabcdbcba", Index = {012683745} Îª false, µ«ÁíÒ»ÖÖ¶ÔÓ¦ÅÅÁĞ Index = {012783645} ÔòÎª true
+```
 	int n = s1.size();
-  if(n != s2.size())return false;
-  if(n == 0) return true;  
+        if(n != s2.size())return false;
+        if(n == 0) return true;  
 	vector< deque<unsigned> > Order(26,deque<unsigned>());
 	vector<unsigned> Index(n,0);
 	int i;
@@ -1065,64 +1002,49 @@ Google Scramble String{
 	 Index[i] = Order[s1[i]-'a'].front();
 	 Order[s1[i]-'a'].pop_front();
 	}
-	--> ²»¿ÉÓÃÓÚÓĞ duplicate µÄ e.g. s1 = "aabbbaccd", s2 = "aabcdbcba", Index = {012683745} Îª false, µ«ÁíÒ»ÖÖ¶ÔÓ¦ÅÅÁĞ Index = {012783645} ÔòÎª true
-	==> With "Duplicated" characters:
-	==> solution 1 O(n^4): ¶¯Ì¬¹æ»® p[i,j,k] s1[i:i+k) == s2[j:j+k), ´Ó k = 1...n-i; i, j = 0...n-1; ±ØĞë±£´æÖĞ¼ä¹ı³ÌÒòÎª
-		p[i,j,k+1] = || p[i,j,s] && p[i+s,j,k-s] || p[i+s,j,s] && p[i,j+s,k-s]; s = 0,...,k
-	==> solution 2: Ì«¸´ÔÓ http://csjobinterview.wordpress.com/2012/06/29/google-scramble-string-ii-with-duplicated-characters/
-	==> solution: DP, O(n). int count[26]; ¶Ô s1 ´ÓÍ·µ½Î²+1£¬s2 ´ÓÎ²µ½Í·É¨Ãè-1, Ò»µ©³öÏÖ sum == 0 ¼´Îª×Ö´®¶Ïµã, return true.
-}
+```
+  * With "Duplicated" characters
+    * solution 1 O(n^4): ¶¯Ì¬¹æ»® p[i,j,k] s1[i:i+k) == s2[j:j+k), ´Ó k = 1...n-i; i, j = 0...n-1; ±ØĞë±£´æÖĞ¼ä¹ı³ÌÒòÎª p[i,j,k+1] = || p[i,j,s] && p[i+s,j,k-s] || p[i+s,j,s] && p[i,j+s,k-s]; s = 0,...,k
+    * solution 2: Ì«¸´ÔÓ http://csjobinterview.wordpress.com/2012/06/29/google-scramble-string-ii-with-duplicated-characters/
+    * solution: DP, O(n). int count[26]; ¶Ô s1 ´ÓÍ·µ½Î²+1£¬s2 ´ÓÎ²µ½Í·É¨Ãè-1, Ò»µ©³öÏÖ sum == 0 ¼´Îª×Ö´®¶Ïµã, return true.
 
-ÓĞn¸öinterval£¬like this [1,7) [2,4) [5,8) [4,5) [3,6) ÕÒ³öÓëÕâĞ©intervalÏà½»µÄ×î¶à´ÎÊıµÄµãµÄ¼¯ºÏ{
-	Ó¦¸Ã·µ»Ø£¬ [3,4), [4,5), [5,6) ÕâÈı¸ö¼¯ºÏ·Ö±ğÖØµşÁËÈı´Î£¬ÊÇ×î¶àµÄ£¬Ã»ÓĞÖØµşËÄ´ÎµÄÇø¼ä¡£
-	¸ø¶¨[1,7) [2,4) [5,8) ·µ»Ø[2,4),[5,7)
-	==> solution: ¹Ø¼üÔÚÓÚ[,) ¶Ô¶Ëµã¼ÇÊıµÄÓ°Ïì¡£cnt = 0; ËùÓĞ¶ËµãÅÅĞò(ÅÅĞòÒÔºóÊ¡È¥ÁË¶ÔÃ¿¸ö interval µÄ¼ì²é)£¬Óö [ +1, ) -1£¬ ÕÒ³ö×î´óÖØµşÊı. µÚ¶ş±é Í¬ÑùÉ¨Ãè£¬¼ÇÂ¼³öÏÖ×î´óÖØµşÊıµÄ [ µ½µÚÒ»¸ö ). Ò²¿ÉÉ¨ÃèÒ»´Î£¬¼ÇÂ¼×îºóµÄ [ , ÔÚ³öÏÖ ) ±È½Ï maximum cnt Èô = Ôò¼ÓÈë¼ÇÂ¼£¬Èô > ÔòÇå¿Õ¼ÇÂ¼ÔÙ¼ÓÈë
-	==> Extension: ºÏ²¢Çø¼ä: ¼´ cnt > 0 µÄÇø¼ä£¬µ«²»ÄÜÓÃÓÚ online stream interval. 
-	==> Extension, Èô²»ÊÇ [) ¶ø°üÀ¨ÓĞÆäËû [] () (] ÄØ
-	==> solution: ½«ËùÓĞ¶ËµãÅÅĞò£¬0(nlgn) ÆäÖĞ n) < n] < [n < (n, Ã¿¸ö n ÓÃÁ½¸ö counter: 0 +. cnt ¹æÔòÎª [n: (0+) ¼Ó 1; (n: (+) ¼Ó 1; n): (0+) ¼õ 1; n]: (+) ¼õ 1.
-	==> Extension: ¾ØĞÎ µÄ×î´óÖØµş£º Á½¶Ô½Çµã×ø±êÖ»¶ÔÆäÖĞÒ»Î¬ x dimension ÓÃ interval, ÈôÓĞ [ , ÔòĞèÒª¼ì²éÔÚÆäËûÎ¬¶ÈÊÇ·ñÒ²Ïà½»£¬·ñÔò±£³ÖÖØµş¶Èµ«¼ÇÂ¼Í¬ÖØµş¶ÈÏÂµÄĞÂÈëµã×ø (³ıÖØµş¶ÈÍâ»¹Ó¦¼ÇÂ¼ Pµã)
-	==> Extension: ÈıÎ¬ÉõÖÁ¶àÎ¬½Ô¿É°´´ËÀ©Õ¹(¼´Á½¸ö¶Ô½ÇµãµÄÃ¿Î¬×ø±ê·Ö½â)
-	==> Extension: Çó×î´óÖØµşÇøÓò(Çø¼ä), ÕÒ cnt > 1 µÄÇøÓòÃæ»ı(Çø¼ä³¤¶ÈµÄ³Ë»ı)
-	==> Extension: ÇóÖØµş´ÎÊıÔÚ [cntLower cntUpper] ÄÚµÄ×î´óÖØµşÇøÓò(Çø¼ä), ÕÒ cnt ·ûºÏÌõ¼şµÄÇøÓòÃæ»ı(Çø¼ä³¤¶ÈµÄ³Ë»ı)¼´¿É
-	==> Extension: ¾ØĞÎºÏÆğÀ´µÄ×ÜÃæ»ı£¬²»ÖØ¸´¼ÆËãÖØµş²¿·Ö: ¼ÆËã cnt ÄÚµÄ¸÷¸öÃæ»ı£¬ÓÃ×ÜÃæ»ıÏà¼õ
-}
+* ÓĞn¸öinterval£¬like this [1,7) [2,4) [5,8) [4,5) [3,6) ÕÒ³öÓëÕâĞ©intervalÏà½»µÄ×î¶à´ÎÊıµÄµãµÄ¼¯ºÏ Ó¦¸Ã·µ»Ø£¬ [3,4), [4,5), [5,6) ÕâÈı¸ö¼¯ºÏ·Ö±ğÖØµşÁËÈı´Î£¬ÊÇ×î¶àµÄ£¬Ã»ÓĞÖØµşËÄ´ÎµÄÇø¼ä¡£ ¸ø¶¨[1,7) [2,4) [5,8) ·µ»Ø[2,4),[5,7)
+  * solution: ¹Ø¼üÔÚÓÚ[,) ¶Ô¶Ëµã¼ÇÊıµÄÓ°Ïì¡£cnt = 0; ËùÓĞ¶ËµãÅÅĞò(ÅÅĞòÒÔºóÊ¡È¥ÁË¶ÔÃ¿¸ö interval µÄ¼ì²é)£¬Óö [ +1, ) -1£¬ ÕÒ³ö×î´óÖØµşÊı. µÚ¶ş±é Í¬ÑùÉ¨Ãè£¬¼ÇÂ¼³öÏÖ×î´óÖØµşÊıµÄ [ µ½µÚÒ»¸ö ). Ò²¿ÉÉ¨ÃèÒ»´Î£¬¼ÇÂ¼×îºóµÄ [ , ÔÚ³öÏÖ ) ±È½Ï maximum cnt Èô = Ôò¼ÓÈë¼ÇÂ¼£¬Èô > ÔòÇå¿Õ¼ÇÂ¼ÔÙ¼ÓÈë
+  * Extension: ºÏ²¢Çø¼ä: ¼´ cnt > 0 µÄÇø¼ä£¬µ«²»ÄÜÓÃÓÚ online stream interval. 
+  * Extension, Èô²»ÊÇ [) ¶ø°üÀ¨ÓĞÆäËû [] () (] ÄØ
+  * solution: ½«ËùÓĞ¶ËµãÅÅĞò£¬0(nlgn) ÆäÖĞ n) < n] < [n < (n, Ã¿¸ö n ÓÃÁ½¸ö counter: 0 +. cnt ¹æÔòÎª [n: (0+) ¼Ó 1; (n: (+) ¼Ó 1; n): (0+) ¼õ 1; n]: (+) ¼õ 1.
+  * Extension: ¾ØĞÎ µÄ×î´óÖØµş£º Á½¶Ô½Çµã×ø±êÖ»¶ÔÆäÖĞÒ»Î¬ x dimension ÓÃ interval, ÈôÓĞ [ , ÔòĞèÒª¼ì²éÔÚÆäËûÎ¬¶ÈÊÇ·ñÒ²Ïà½»£¬·ñÔò±£³ÖÖØµş¶Èµ«¼ÇÂ¼Í¬ÖØµş¶ÈÏÂµÄĞÂÈëµã×ø (³ıÖØµş¶ÈÍâ»¹Ó¦¼ÇÂ¼ Pµã)
+  * Extension: ÈıÎ¬ÉõÖÁ¶àÎ¬½Ô¿É°´´ËÀ©Õ¹(¼´Á½¸ö¶Ô½ÇµãµÄÃ¿Î¬×ø±ê·Ö½â)
+  * Extension: Çó×î´óÖØµşÇøÓò(Çø¼ä), ÕÒ cnt > 1 µÄÇøÓòÃæ»ı(Çø¼ä³¤¶ÈµÄ³Ë»ı)
+  * Extension: ÇóÖØµş´ÎÊıÔÚ [cntLower cntUpper] ÄÚµÄ×î´óÖØµşÇøÓò(Çø¼ä), ÕÒ cnt ·ûºÏÌõ¼şµÄÇøÓòÃæ»ı(Çø¼ä³¤¶ÈµÄ³Ë»ı)¼´¿É
+  * Extension: ¾ØĞÎºÏÆğÀ´µÄ×ÜÃæ»ı£¬²»ÖØ¸´¼ÆËãÖØµş²¿·Ö: ¼ÆËã cnt ÄÚµÄ¸÷¸öÃæ»ı£¬ÓÃ×ÜÃæ»ıÏà¼õ
 
-ÓĞÒ»×érecords£¬Ã¿¸örecordÓÉÈı¸ö²ÎÊı×é³É£¬¿ªÊ¼Ê±¼ä£¬½áÊøÊ±¼ä£¬È¨ÖØ¡£ÕÒµ½Ò»¸öset£¬Õâ¸öset°üº¬µÄrecordsÔÚÊ±¼äÉÏÃ»ÓĞÖØµş£¬²¢ÇÒsetµÄÈ¨ÖØÖ®ºÍ×î´ó{
-	==> 1. Çø¼äÁ½¶ËÅÅĞò ÓÃ map, [ +weight, ] ; 2. Ò»´ÎÉ¨Ãè stack s(1,0); update minInd = 0, Îª×î³Ù½áÊøÖ® ], Óö [, w(i) + w[minInd] ÈëÕ». 3. ÇóÕ»ÖĞ×î´óÖµ¼´¿É
-}
+* ÓĞÒ»×érecords£¬Ã¿¸örecordÓÉÈı¸ö²ÎÊı×é³É£¬¿ªÊ¼Ê±¼ä£¬½áÊøÊ±¼ä£¬È¨ÖØ¡£ÕÒµ½Ò»¸öset£¬Õâ¸öset°üº¬µÄrecordsÔÚÊ±¼äÉÏÃ»ÓĞÖØµş£¬²¢ÇÒsetµÄÈ¨ÖØÖ®ºÍ×î´ó
+  * solution: 1. Çø¼äÁ½¶ËÅÅĞò ÓÃ map, [ +weight, ] ; 2. Ò»´ÎÉ¨Ãè stack s(1,0); update minInd = 0, Îª×î³Ù½áÊøÖ® ], Óö [, w(i) + w[minInd] ÈëÕ». 3. ÇóÕ»ÖĞ×î´óÖµ¼´¿É
 
-Given array element A[i] represents maximum jump length at i, find the minimum number of jumps from 0 to n-1{
-	e.g. A = [2,3,1,1,4], min jump from 0 to 4 = 3
-	==> solution: ×î´ó¸²¸ÇÇø¼äÎÊÌâ. [s,e], cnt; ¿ªÊ¼ [0,0], cnt = 0; È»ºó [e+1,max(A[i]+i,i in Ô­ [s,e] )] cnt+= 1; Îª µÚ cnt Ìø¸²¸ÇµÄ interval, ×¢ÒâÅĞ¶Ï end> n.
-}
+* Given array element A[i] represents maximum jump length at i, find the minimum number of jumps from 0 to n-1.  e.g. A = [2,3,1,1,4], min jump from 0 to 4 = 3
+  * solution: ×î´ó¸²¸ÇÇø¼äÎÊÌâ. [s,e], cnt; ¿ªÊ¼ [0,0], cnt = 0; È»ºó [e+1,max(A[i]+i,i in Ô­ [s,e] )] cnt+= 1; Îª µÚ cnt Ìø¸²¸ÇµÄ interval, ×¢ÒâÅĞ¶Ï end> n.
 
-¸øÒ» array A[n], s.t. |A_i - A_{i+1}| <= 1; ²éÕÒÒ» x{
-	==> ²»ÒªÈÏÎªÊÇ 2-sorted e.g. 232101, ËùÒÔ²»¿ÉÒÔ¶ş·Ö¡£µ«¿ÉÒÔ ¸ù¾İ |x-A_i| ÕÒ²½³¤ O(n). 
-}
+* ¸øÒ» array A[n], s.t. |A_i - A_{i+1}| <= 1; ²éÕÒÒ» x
+  * ²»ÒªÈÏÎªÊÇ 2-sorted e.g. 232101, ËùÒÔ²»¿ÉÒÔ¶ş·Ö¡£µ«¿ÉÒÔ ¸ù¾İ |x-A_i| ÕÒ²½³¤ O(n). 
 
-¸øÆ½ÃæÉÏ n ¸öµã (ÕûÊı)£¬»­Ò»ÏßÊ¹Ö®°üº¬×î¶àµÄµã{
-	==> solution 1: hash Ğ±ÂÊ space(n^2), ×î¶à O(n^2). one pass
-	==> solution 2: ¶ÔÃ¿µã¼ÇÂ¼ Ğ±ÂÊ£¬¸ÃĞ±ÂÊÏÂµÄÇ°Ò»µã£¬cnt. one pass Ò²ÊÇ O(n^2) space Óë time
-}
+* ¸øÆ½ÃæÉÏ n ¸öµã (ÕûÊı)£¬»­Ò»ÏßÊ¹Ö®°üº¬×î¶àµÄµã
+  * solution 1: hash Ğ±ÂÊ space(n^2), ×î¶à O(n^2). one pass
+  * solution 2: ¶ÔÃ¿µã¼ÇÂ¼ Ğ±ÂÊ£¬¸ÃĞ±ÂÊÏÂµÄÇ°Ò»µã£¬cnt. one pass Ò²ÊÇ O(n^2) space Óë time
 
-Given ÎŞĞò A->B->C->D->E->F->G->........->Z, ¸ø¼¸¸ö listÖĞµÄnodes, C, A, B, E, G Çó cluster µÄ¸öÊı{
-	e.g. Cluster1: A->B->C; Cluster2: E; Cluster3: G. ËùÒÔÈı¸ö
-	==> ×¢Òâ node ¸öÊıÓĞÏŞ£¬¶ø list ÔªËØÊı´ï million
-	==> solution: node Èë set, ¶ÔÃ¿¸öset ÖĞÔªËØ£¬ÕÒÆä next ÊÇ·ñÔÚ set ÖĞ£¬ÈôÊÇ ÔòÉè link Îª¸ÃÔªËØ; Èô·ñ£¬ÔòÉèÎª×ÔÉí. ×îºóÎª set ÖĞ link Îª×ÔÉíµÄÔªËØ¸öÊı
-}
+* Given ÎŞĞò A->B->C->D->E->F->G->........->Z, ¸ø¼¸¸ö listÖĞµÄnodes, C, A, B, E, G Çó cluster µÄ¸öÊı e.g. Cluster1: A->B->C; Cluster2: E; Cluster3: G. ËùÒÔÈı¸ö.  ×¢Òâ node ¸öÊıÓĞÏŞ£¬¶ø list ÔªËØÊı´ï million
+  * solution: node Èë set, ¶ÔÃ¿¸öset ÖĞÔªËØ£¬ÕÒÆä next ÊÇ·ñÔÚ set ÖĞ£¬ÈôÊÇ ÔòÉè link Îª¸ÃÔªËØ; Èô·ñ£¬ÔòÉèÎª×ÔÉí. ×îºóÎª set ÖĞ link Îª×ÔÉíµÄÔªËØ¸öÊı
 
-Ò»¶Ô strings k-suspious: ÖÁÉÙÓĞ k-³¤¶ÈµÄ substring ÏàÍ¬, ¸ø a set of strings, ÕÒ³öËùÓĞ k-suspious substrings{
-==> solution: ÓÃ hash table (Rabin-Karp rolling hash), ÆäÖĞ string_rolling_hash: val = 0, MUL = 997; for(auto &i:str){ val = (val * MUL + i) % modulers}
+* Ò»¶Ô strings k-suspious: ÖÁÉÙÓĞ k-³¤¶ÈµÄ substring ÏàÍ¬, ¸ø a set of strings, ÕÒ³öËùÓĞ k-suspious substrings
+  *  solution: ÓÃ hash table (Rabin-Karp rolling hash), ÆäÖĞ string_rolling_hash: val = 0, MUL = 997; for(auto &i:str){ val = (val * MUL + i) % modulers}
 --> solution: ÓÃ bloom filter ½«ËùÓĞ substring ·Ö¿ª	
-}
 
-ÕÒ³ö 5^1234566789893943µÄ´Óµ×Î»¿ªÊ¼µÄ1000Î»Êı×Ö{
-	==> solution: ¶ş½øÖÆÃİÊı + ´óÊı (1000 Î») ³Ë·¨
-	
-}
+* ÕÒ³ö 5^1234566789893943µÄ´Óµ×Î»¿ªÊ¼µÄ1000Î»Êı×Ö
+  * Solution: ¶ş½øÖÆÃİÊı + ´óÊı (1000 Î») ³Ë·¨
 
-Ò»¸öÃÜÂëËøËÄÎ» 0-9, Çó×î¶ÌÃÜÂë´®£¬Ê¹µÃ {// ¸ĞÏë: ÊıÑ§Ë¼Î¬ Óë CS Ë¼Î¬µÄ²»Í¬
-	==> Hamilton »ØÂ· + DFS, ²»ÒªÏë´ÓÊıÑ§·½ÃæÕÒ³ö¹æÔò // »ØËİ + µİ¹é 
+* Ò»¸öÃÜÂëËøËÄÎ» 0-9, Çó×î¶ÌÃÜÂë´®£¬Ê¹µÃ {// ¸ĞÏë: ÊıÑ§Ë¼Î¬ Óë CS Ë¼Î¬µÄ²»Í¬
+  * Solution: Hamilton »ØÂ· + DFS, ²»ÒªÏë´ÓÊıÑ§·½ÃæÕÒ³ö¹æÔò // »ØËİ + µİ¹é 
+```
 	bool DFS(vector<bool> & IsVisited, vector<char> & Result, int CurrNum){
 		if(Result.size() == 10003) return true;
 		int pre = (CurrNum % 10000) * 10;
@@ -1141,14 +1063,11 @@ Given ÎŞĞò A->B->C->D->E->F->G->........->Z, ¸ø¼¸¸ö listÖĞµÄnodes, C, A, B, E, G
 	vector<bool> IsVisited(10000,false); 
 	vector<char> Result(4,'0');
 	DFS(IsVisited,Result,0);
-}
+```
 
-¸øÁ½¸önumber£¬mºÍn£¬ÕÒµ½m¸ö >=n µÄ ×îĞ¡ Palindromic Numbers{
-	==> solution 1: ´Ó n ¿ªÊ¼Ò»¸ö¸öÑéÖ¤ m*n
-	==> solution 2: Éú³É·¨ ÕÒ n ÖĞ¼äµÄ½øÎ»¡£ ·ÖÁ½²¿·Ö 1. Óë n Í¬³¤; 2. ±È n ³¤µÄ. Sub(int len, deque<int>& result, int num = m+1, int start = n)
-		--> ×¢Òâ n ±¾ÉíÊÇ Palindromic, 102 Èô°´ 10 ±ä 101 Ôò²»ĞĞ£¬ËùÒÔÓë n µÈ³¤Ê±Òª¶Ô·µ»ØµÄ result É¾³ı²¿·Ö
-}
+* ¸øÁ½¸önumber£¬mºÍn£¬ÕÒµ½m¸ö >=n µÄ ×îĞ¡ Palindromic Numbers{
+  * solution 1: ´Ó n ¿ªÊ¼Ò»¸ö¸öÑéÖ¤ m*n
+  * solution 2: Éú³É·¨ ÕÒ n ÖĞ¼äµÄ½øÎ»¡£ ·ÖÁ½²¿·Ö 1. Óë n Í¬³¤; 2. ±È n ³¤µÄ. Sub(int len, deque<int>& result, int num = m+1, int start = n). ×¢Òâ n ±¾ÉíÊÇ Palindromic, 102 Èô°´ 10 ±ä 101 Ôò²»ĞĞ£¬ËùÒÔÓë n µÈ³¤Ê±Òª¶Ô·µ»ØµÄ result É¾³ı²¿·Ö
 
-¸øÒ»¸öarray of int£¬ÒÔ¼°Ò»¸örange (low, high), ÕÒ³öËùÓĞ sum ÔÚ range ÄÚµÄÁ¬ĞøµÄ subsequence{
-	==> for L:0 -->n-1; bool IsFromL; 
-}
+* ¸øÒ»¸öarray of int£¬ÒÔ¼°Ò»¸örange (low, high), ÕÒ³öËùÓĞ sum ÔÚ range ÄÚµÄÁ¬ĞøµÄ subsequence
+  * solution: for L:0 -->n-1; bool IsFromL; 

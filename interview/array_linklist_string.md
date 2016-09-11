@@ -11,9 +11,10 @@ Sorting:
  * 可用 indirect sort 来减少 storage and swapping cost, e.g. 用 indirect counting sort 可节省空间
 
 
-Rolling max (or min) of an array (n) with window(w){// 利用 index queue 来储存信息 Q 长 w, Q[0] is the index of the maximium element within (k-w,k]
-	define a de-queue, where the front is the index of maximum before that index,
-	since each element enter/remove from that queue at most twice, the complexity is just O(n)
+Questions:
+
+* Rolling max (or min) of an array (n) with window(w)
+  * solution: 利用 index queue 来储存信息 Q 长 w, Q[0] is the index of the maximium element within (k-w,k]. define a de-queue, where the front is the index of maximum before that index, since each element enter/remove from that queue at most twice, the complexity is just O(n)
 	
 	void maxSlidingWindow(int A[], int n, int w, int B[]) {
 		if(n <= 0 || n < w) return;
@@ -26,9 +27,8 @@ Rolling max (or min) of an array (n) with window(w){// 利用 index queue 来储存信
 	  }
 	  B[n-w] = A[Q.front()];
 	}
-}
 
-maximum subarray sum {//
+* maximum subarray sum {//
 	==> solution O(n): 先计算 cumulative sum, O(n); 计算 sum[i] - min_sum[i] O(n)
 }
 

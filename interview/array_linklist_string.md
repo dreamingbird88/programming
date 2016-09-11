@@ -15,9 +15,9 @@ Questions:
 
 * Rolling max (or min) of an array (n) with window(w)
   * solution: 利用 index queue 来储存信息 Q 长 w, Q[0] is the index of the maximium element within (k-w,k]. define a de-queue, where the front is the index of maximum before that index, since each element enter/remove from that queue at most twice, the complexity is just O(n)
-	
+```
 	void maxSlidingWindow(int A[], int n, int w, int B[]) {
-		if(n <= 0 || n < w) return;
+          if(n <= 0 || n < w) return;
 	  deque<int> Q;
 	  for (int i = 0; i < n; ++i) {
 	    if(i >= w) B[i-w] = A[Q.front()];
@@ -29,19 +29,21 @@ Questions:
 	  }
 	  B[n-w] = A[Q.front()];
 	}
+```
 
 * maximum subarray sum
   * solution O(n): 先计算 cumulative sum, O(n); 计算 sum[i] - min_sum[i] O(n)
 
 * Rolling sum (or mean) of an array (n) with window (w)
   * solution:two sum 相隔 w, 其差便为 sum with length w.
-
+```	
   void RollingSum(int A[],int n, int w, int B[]){
           if(n <= 0 || n < w) return;
           int i = 0;
           while(++i < n) A[i] += A[i-1]; 
           while(int i = w; i < n; ++i)B[i] = A[i] - A[i-w];
   }
+```	
 
 Rolling median of online stream{
 	==> solution: 维护 min-heap and max-heap, 使其差最多为1, (median 即为多者之root, 若 size 相等，刚为两 roots 之平均值) O(nlgn) Amortized O(lg)

@@ -21,24 +21,27 @@ Questions:
 	  deque<int> Q;
 	  for (int i = 0; i < n; ++i) {
 	    if(i >= w) B[i-w] = A[Q.front()];
-	    while (!Q.empty() && A[i] >= A[Q.back()]) Q.pop_back(); // 由于 A[i] 的大小而从后更新, 关键此步
-	    while (!Q.empty() && Q.front() <= i-w) Q.pop_front(); // 由于 i 的大小而从前更新
+            // 由于 A[i] 的大小而从后更新, 关键此步
+	    while (!Q.empty() && A[i] >= A[Q.back()]) Q.pop_back();
+            // 由于 i 的大小而从前更新
+	    while (!Q.empty() && Q.front() <= i-w) Q.pop_front();
 	    Q.push_back(i);
 	  }
 	  B[n-w] = A[Q.front()];
 	}
 
-* maximum subarray sum {//
-	==> solution O(n): 先计算 cumulative sum, O(n); 计算 sum[i] - min_sum[i] O(n)
-}
+* maximum subarray sum
+  * solution O(n): 先计算 cumulative sum, O(n); 计算 sum[i] - min_sum[i] O(n)
 
-Rolling sum (or mean) of an array (n) with window (w){//two sum 相隔 w, 其差便为 sum with length w.
-	void RollingSum(int A[],int n, int w, int B[]){
-		if(n <= 0 || n < w) return;
-		int i = 0;
-		while(++i < n) A[i] += A[i-1]; 
-		while(int i = w; i < n; ++i)B[i] = A[i] - A[i-w];
-}
+* Rolling sum (or mean) of an array (n) with window (w)
+  * solution:two sum 相隔 w, 其差便为 sum with length w.
+
+  void RollingSum(int A[],int n, int w, int B[]){
+          if(n <= 0 || n < w) return;
+          int i = 0;
+          while(++i < n) A[i] += A[i-1]; 
+          while(int i = w; i < n; ++i)B[i] = A[i] - A[i-w];
+  }
 
 Rolling median of online stream{
 	==> solution: 维护 min-heap and max-heap, 使其差最多为1, (median 即为多者之root, 若 size 相等，刚为两 roots 之平均值) O(nlgn) Amortized O(lg)

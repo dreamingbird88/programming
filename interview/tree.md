@@ -1,11 +1,17 @@
-// ================================================================= //
-ÔÄ¶Á¼ÇÂ¼: 2013.10.04 2013.10.23 2013.11.12
-// ================================================================= //
-==> ÀûÓÃÊ÷ĞÍ½á¹¹¾¡Á¿ÓÃ recursive
-==> Ê÷ĞÍ recursive function ÉÆÓÚÓÃ"ÒıÓÃ" ²ÎÊı
-// ================================================================= //
+Read records:
+  * 2016.10.05 Not finished
+  * 2013.11.12
+  * 2013.10.23
+  * 2013.10.04
 
-Construct Binary Tree from Preorder and Inorder Traversal{// ĞèÒª VC ÕÒ´íÎó; 2013.05.01 // ÔÚ×öÍêÇ°Ìâ»ù´¡ÉÏ»¹ÊÇÓĞÒ»´í: 2013.05.01
+Summaries:
+  * ÀûÓÃÊ÷ĞÍ½á¹¹¾¡Á¿ÓÃ recursive
+  * Ê÷ĞÍ recursive function ÉÆÓÚÓÃ"ÒıÓÃ" ²ÎÊı
+
+Questions
+
+* Construct Binary Tree from Preorder and Inorder Traversal
+  // ĞèÒª VC ÕÒ´íÎó; 2013.05.01 // ÔÚ×öÍêÇ°Ìâ»ù´¡ÉÏ»¹ÊÇÓĞÒ»´í: 2013.05.01
 	e.g. preorder = {7,10,4,3,1,2,8,11} inorder = {4,10,3,1,7,11,8,2} Çó tree
 	==> solution: ÓÃÊ÷ĞÍ recursive Ëã·¨£¬ÕÒ³ö root index. ÆäÖĞ¿ÉÏÈ map inorder index
 			==> Convert Vector to array: int * a = &v[0];
@@ -35,23 +41,16 @@ Construct Binary Tree from Preorder and Inorder Traversal{// ĞèÒª VC ÕÒ´íÎó; 201
 	==> Extension 1: ¿ÉÓÃ Inorder + Postorder Traversal; 
 	==> Extension 2: ÓÃ Preorder + Postorder ·Ö²»Çå×óÓÒ×ÓÊ÷; 
 	==> Extension 3: Given preorder, inorder, and postorder traversal, how can you verify if these traversals are referring to the exact same binary tree? 
-}
 
 
-ÓÃ O(n) Ëã·¨À´ÖØ½¨given array A[n] with unique elements µÄ max-tree{// max-tree, let m be the index of maximum element and A[0--m-1], A[m+1,--,n-1] ·Ö±ğÊÇ max-tree
+* ÓÃ O(n) Ëã·¨À´ÖØ½¨given array A[n] with unique elements µÄ max-tree
+  // max-tree, let m be the index of maximum element and A[0--m-1], A[m+1,--,n-1] ·Ö±ğÊÇ max-tree
 	==> ´Ó×óµ½ÓÒ½¨Ê÷£¬±È½Ï TreeNode p Óë A[i], Èô A[i] > p->val Ôò p ³É A[i] µÄ×ó×ÓÊ÷£¬A[i] ´úÌæ p ³É p µÄ parent µÄÓÒ×ÓÊ÷; ·ñÔò Èô p ÎŞÓÒ×ÓÊ÷£¬ÔòÌîÈë a[i], ÈôÓĞÓÒ×ÓÊ÷ p = p->right.
 	==> Extension: ¸ù¾İ preorder »òÕß postorder ÖØ¹¹Ê÷¡£ ¸ù¾İ inorder ²»¿ÉÄÜÖØ¹¹Ê÷
-}
 
-Tree traverse without recursive{
-(1) postorder: stack + flag(for unvisited branches, Ò²¿É²»ÓÃ flag, ¿ÉÓÃÁ½¸öÖ¸Õë, check current node is the right child of the next node)
-(2) preorder: just stack
-(3) inorder: stack + flag; ¿É²»ÓÃ flag (a) Ö±µ½×î×ó£¬path ÉÏËùÓĞµã push. È»ºópop£¬ÈôËù pop µÄ node ÓĞ right child, ¶Ô right child ÓÃµ½×î×ó; (b) ¿ÉÓÃ prev and curr À´ÅĞ¶ÏÊÇ´Ó×ÓÊ÷·µ»ØÓë·ñ¡£
-(4) Level Order: queue + CurCnt + NextCnt 
-(5) Zip-Zag Level Order: ÀûÓÃ stack ÏÈ½øºó³öµÄÌØĞÔ£¬ÓÃÁ½¸ö stack ´ú±í²»Í¬ level 
-
-All iterative functions
-
+* Tree traverse without recursive
+  * postorder: stack + flag(for unvisited branches, Ò²¿É²»ÓÃ flag, ¿ÉÓÃÁ½¸öÖ¸Õë, check current node is the right child of the next node)
+```
 void PostOrder(TreeNode * h) {// 2013.11.08 ¼ò½à°æ
     vector<TreeNode*> q; 
     TreeNode* p = 0;
@@ -69,7 +68,21 @@ void PostOrder(TreeNode * h) {// 2013.11.08 ¼ò½à°æ
     }
     return result;
 }
-
+```
+  * preorder: just stack
+```
+void PreOrder(node*t){// iterative approach using stack, unlike PostOrder, no need flag
+	stack<node*> s(NULL); // last elment is NULL, control while
+	while(t){
+		if(t->right)s.push_back(t->right);
+		if(t->left)s.push_back(t->left);
+		visit(t);
+		t = s.back(); s.pop_back();
+	}
+}
+```
+  * inorder: stack + flag; ¿É²»ÓÃ flag (a) Ö±µ½×î×ó£¬path ÉÏËùÓĞµã push. È»ºópop£¬ÈôËù pop µÄ node ÓĞ right child, ¶Ô right child ÓÃµ½×î×ó; (b) ¿ÉÓÃ prev and curr À´ÅĞ¶ÏÊÇ´Ó×ÓÊ÷·µ»ØÓë·ñ¡£
+```
 void InOrder(Node *pRoot){// for ReverseInOrder, only switch the order of left child and right child
     Stack<Node *> s;
     while( pRoot || !s.Empty() ){
@@ -82,26 +95,33 @@ void InOrder(Node *pRoot){// for ReverseInOrder, only switch the order of left c
         pRoot = pRoot->pRight;
     }
 }
+```
+  * Level Order: queue + CurCnt + NextCnt 
 
-void PreOrder(node*t){// iterative approach using stack, unlike PostOrder, no need flag
-	stack<node*> s(NULL); // last elment is NULL, control while
-	while(t){
-		if(t->right)s.push_back(t->right);
-		if(t->left)s.push_back(t->left);
-		visit(t);
-		t = s.back(); s.pop_back();
-	}
+```
+Binary Tree Level Order Traversal{// no error 2013.05.01
+	==> solution: ÓÃ ¶ÓÁĞ int CurrLevelCnt, NextLevelCnt;
+	==> Extension: Binary Tree Zigzag Level Order Traversal // no error,ÎŞ´íÍ¨¹ı 2013.05.01  µ«Íü¼ÇÇå0£¬ NextLvNum = 0; within while 2013.05.01
+	--> solution: ÓÃÁ½¸ö¸üÌæµÄ stack ¼´¿É
 }
+```
+  * Zip-Zag Level Order: ÀûÓÃ stack ÏÈ½øºó³öµÄÌØĞÔ£¬ÓÃÁ½¸ö stack ´ú±í²»Í¬ level 
 
-´Ó×óµ½ÓÒ´òÓ¡ BT µÄÒ¶×Ó{
+
+
+* ´Ó×óµ½ÓÒ´òÓ¡ BT µÄÒ¶×Ó
 	==> µİ¹é
 	==> ´òÓ¡ BT µÄ±ß½ç (root --> ×î×óÒ¶×Ó --> ×îÓÒÒ¶×Ó --> root): ÓÃÁ½¸ö×óÓÒ±ß½çº¯Êı£¬ ÓÃ is_boundary ÅĞ¶Ï±ß½ç£¬Èô²»ÊÇÔò²»´òÓ¡ÖĞ¼ä½Úµã
 }
 
-¸øÒ»¸öÊı×é£¬ÅĞ¶¨ÊÇ·ñ¿ÉÄÜÊÇÒ»¸öBSTºóĞò±éÀúµÃµ½µÄ{// ÓÃ [minVal, maxVal] À´½ç¶¨×Ó·¶Î§, ´Ó¶øÈ·¶¨ÏÂ¸ö×ÓÊ÷µÄ¿ªÊ¼ index£¬²¢¸üĞÂ [minVal, maxVal]
+* ¸øÒ»¸öÊı×é£¬ÅĞ¶¨ÊÇ·ñ¿ÉÄÜÊÇÒ»¸öBSTºóĞò±éÀúµÃµ½µÄ
+// ÓÃ [minVal, maxVal] À´½ç¶¨×Ó·¶Î§, ´Ó¶øÈ·¶¨ÏÂ¸ö×ÓÊ÷µÄ¿ªÊ¼ index£¬²¢¸üĞÂ [minVal, maxVal]
 	==> solution: Ê÷ĞÍµİ¹é£¬parent ½áµãÎª·Ö½çµã
-	int scanPostOrder(int *A, int idx, int minVal, int maxVal){// idx Îª parent index, return ÖµÎªÒÔ idx Îª×æÏÈµÄ×îÇ° index. 
-	  if (idx < 0 || A[idx] < minVal || A[idx] > maxVal)return idx; //Èç¹û²»ÄÜÂú×ãÊıÖµ·¶Î§,»òÕßÒÑ¾­É¨ÃèÍê±Ï£¬¾Í·µ»Øµ½¸¸½Úµã
+```
+	int scanPostOrder(int *A, int idx, int minVal, int maxVal){
+          // idx Îª parent index, return ÖµÎªÒÔ idx Îª×æÏÈµÄ×îÇ° index. 
+	  if (idx < 0 || A[idx] < minVal || A[idx] > maxVal)return idx;
+          //Èç¹û²»ÄÜÂú×ãÊıÖµ·¶Î§,»òÕßÒÑ¾­É¨ÃèÍê±Ï£¬¾Í·µ»Øµ½¸¸½Úµã
 	  int val = A[idx];
 	  idx = scanPostOrder(A, idx-1, val, maxVal);  // ÓÒ×ÓÊ÷
 	  return scanPostOrder(A, idx, minVal, val);   // ×ó×ÓÊ÷
@@ -111,23 +131,11 @@ void PreOrder(node*t){// iterative approach using stack, unlike PostOrder, no ne
 	{
 	  return scanPostOrder(A, n-1, INT_MIN, INT_MAX) < 0;
 	}
-}
+```
 
-void BreathFirst(node*t){// iterative approach using queue == PreOrder
-}
-
-void DepthFirst(node*t){// iterative approach using stack == PostOrder
-}
-
-
-Binary Tree Level Order Traversal{// no error 2013.05.01
-	==> solution: ÓÃ ¶ÓÁĞ int CurrLevelCnt, NextLevelCnt;
-	==> Extension: Binary Tree Zigzag Level Order Traversal // no error,ÎŞ´íÍ¨¹ı 2013.05.01  µ«Íü¼ÇÇå0£¬ NextLvNum = 0; within while 2013.05.01
-	--> solution: ÓÃÁ½¸ö¸üÌæµÄ stack ¼´¿É
-}
-
-Given a binary tree, find the lowest common ancestor of two given nodes in the tree{
+* Given a binary tree, find the lowest common ancestor of two given nodes in the tree
 	==> Solution: recursive, bottom up. O(n)
+```
 	Node *LCA(Node *root, Node *p, Node *q) {// return root if both L R are not null, return L or R if only one of them is NOT null
 	  if (!root) return 0;
 	  if (root == p || root == q) return root;
@@ -136,14 +144,15 @@ Given a binary tree, find the lowest common ancestor of two given nodes in the t
 	  if (L && R) return root;  // if p and q are on both sides
 	  return L ? L : R;  // either one of p,q is on one side OR p,q is not in L&R subtrees
 	}
+```
 	==> Extension: if nodes have pointers to parents, no need recursive. O(lg(n)), find the path of both nodes, estimate their hights, start from the same height, no need for extra space.
-}
 
-convert a BST to a new Data Structure s.t. {
+* convert a BST to a new Data Structure s.t.
 	1. ËùÓĞ leaf node's ×ó ptr Ö¸Ïò its parent£¬ ÓÒ ptr Ö¸ÏòÏÂÒ»¸ö leaf node
 	2. ËùÓĞ non leaf node's  ×ó ptr Ö¸Ïò its parent£¬ÓÒ ptr == NULL
 	3. return the head and print the new DS 
 	==> solution: ´Óroot µ½Ò»¸ö leaf ½«ËùÓĞ left ½áµãÈë stack s,  È»ºó¶Ô s ÖĞÔªËØÕûÀí left pointer. s1 Pop_back until empty or any element->right != 0;
+```
 	vector<Node*> s; // or head == h;
 	StopInd = 0; // the index of the first node with non-empty right pointer in s
 	Node P(0); Node * cur = &P;// leave's pointers
@@ -165,9 +174,11 @@ convert a BST to a new Data Structure s.t. {
 		}
 	}	
 	return P.right;
-}
+```
 
-Sum Root to Leaf Numbers{// 2013.09.22, every node in the tree has 0-9 digits, every leaf represent an int, e.g., 1-2-3 = 123, sum up all leaves.
+* Sum Root to Leaf Numbers
+  // 2013.09.22, every node in the tree has 0-9 digits, every leaf represent an int, e.g., 1-2-3 = 123, sum up all leaves.
+```
 	void sumNumbers_sub(TreeNode *root, int& sum, int path){
 		if(!root) return;
 		int p = path * 10 + root->val;
@@ -183,26 +194,29 @@ Sum Root to Leaf Numbers{// 2013.09.22, every node in the tree has 0-9 digits, e
   	sumNumbers_sub(root,sum,0);
   	return sum;
   }
-}
+```
 
-Path Sum{
+* Path Sum
 	==> Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+```
     bool hasPathSum(TreeNode *root, int sum) {
         if(!root) return sum == 0;// ´íÎó: Íü¼ÇÅĞ¶ÏÊÇ·ñÎª¿Õ
 				if(hasPathSum(root->left,sum - root->val)) return true;
         if(hasPathSum(root->right,sum - root->val)) return true;
         return false;
     }
+```
   ==> Extension: Given a binary tree and a sum, find all root-to-leaf paths where each path sum equals the given sum. // 2013.09.13 µÚ¶ş´ÎÎŞ´íÍ¨¹ı
   	½â¾ö·½·¨: ÔÚº¯ÊıĞÎ²ÎÀï¼Ó & result ºÍ & path
-}
 
-Find the max sum path in a Binary tree, the start and end points are not necessary to be leaves or root.{
+* Find the max sum path in a Binary tree, the start and end points are not necessary to be leaves or root.
+
 	==> Solution: 2012.11.08: O(nlgn) or O(n) if allowing using O(lgn) space. Two recursive functions: f[i] and g[i], where g[i] is the maximum path from leaf to i; and f[i] is the maximum path within branch i: using stacks to calculate f[i], g[i] simultaneous
 			f[i] = max{f[i->left],f[i->right],g[i->left]+g[i->right]+w[i]}, 
 			g[i] = max{g[i->left],g[i->right]} + w[i], 
 	
-	* ÃîÔÚ½« f[i] ÍêÈ«·Åµ½×ÓÊ÷ max Àïupdate		
+	ÃîÔÚ½« f[i] ÍêÈ«·Åµ½×ÓÊ÷ max Àïupdate		
+```
 	int maxPath(TreeNode *root,int &max){// return the maximum top down sum; use max as the maximum: max=0;
 	  if (!root)return 0;
 	  int l = 0, r = 0; 
@@ -213,22 +227,23 @@ Find the max sum path in a Binary tree, the start and end points are not necessa
 	  MaxWithRoot = (l>r?l:r)+root->val;// g[i]
 	  return MaxWithRoot>0?MaxWithRoot:0;
 	}
+```
 	==> Extension: ÕÒ all paths which sum up to a given value. Note that it can be any path in the tree - it does not have to start at the root.	
 	==> Solution: Time O(nlgn) space O(lgn) CareerCup ÉÏµÄ½âÊÍÊÇ´Ó root ³ö·¢ÏòÏÂ×ßµÄ sum . ÆäÊµ ÈôÈçÌâËùÊ¾£¬¿¼ÂÇµ½×óÓÒ×ÓÊ÷£¬ºÜÄÑ×öµ½¡£iterative, using stack. Hard problem, the key is how to find a path through a node with the sum == given value. One need to test every possible combinations of left branch and right branch
-}
 
-Set all in order-successor pointers of the given binary search tree{// use post-order to set 
+* Set all in order-successor pointers of the given binary search tree// use post-order to set 
 You are given a binary search tree T of finite (means can fit in memory) size n in which each node N contains
 - integer data element
 - pointer to left child
 - pointer to right child
 - pointer to in order successor (which is set null for each node)
 
-Set all in order successor pointers of the given binary search tree
+* Set all in order successor pointers of the given binary search tree
 
 ==> using stack, iterative. [For problems need previous pointers, iterative is much better than recursive]
 
 ==> Recursive Version: 
+```
 Node* SetInOrderSuccessor(Node*T, Node* Pre){// ĞèÒª Ç°Ãæ½áµãÖ¸Õë return the last in-order element
 	if(!T) return 0;	
 	if(T->left)
@@ -239,15 +254,15 @@ Node* SetInOrderSuccessor(Node*T, Node* Pre){// ĞèÒª Ç°Ãæ½áµãÖ¸Õë return the las
 	if(T->right) T = SetInOrderSuccessor(T->right,T);
 	return T;
 }
-}
+```
 
-Serialization/Deserialization of a Binary Tree{
+* Serialization/Deserialization of a Binary Tree
 	==> solution: use preorder + '#' ´ú±í null. ÓÃ vector<Node*> q; ºÍÒ»¸ö CurrentIndex 
 	==> Deserialize: ÓÃ queue
-}
 
-find the kth element /the last kth element in BST { // ´« k µÄÒıÓÃ
+* find the kth element /the last kth element in BST // ´« k µÄÒıÓÃ
 ==> Solution: O(k+lgn), with in-order traverse(min) or reverse-in-order(max) ²î±ğÔÚÓÚ×óÓÒ×ÓÊ÷µÄ´ÎĞò
+```
 	node* InOrder( node*t, int& k){// t != NULL, k > 0
 		if(k <=0 || t == 0) return 0;
 		node * Result = InOrder(t->left, k);
@@ -255,38 +270,39 @@ find the kth element /the last kth element in BST { // ´« k µÄÒıÓÃ
 		if(k-- == 1) return t;
 		return InOrder(t->right, k);
 	}
-}
+```
 
-Find the closest k-th elements in a BST for a given x{// 2012.11.08
+* Find the closest k-th elements in a BST for a given x// 2012.11.08
 	==> FindkthClosestLarger(), FindkthClosestSmaller() ·Ö±ğÕÒ³ö±È x ´óµÄ×îĞ¡µÄ k ¸ö element ÓÃ O(k+lgn), ÔÙ merge O(k). 
-}
 
-ÕÒÁ½¸ö¶ş²æÊ÷×î´óµÄÏàÍ¬×ÓÊ÷ {// hash value
+* ÕÒÁ½¸ö¶ş²æÊ÷×î´óµÄÏàÍ¬×ÓÊ÷ // hash value
 	==> solution: hash(node) to double: e.g. ln5 * val + ln2 * hash(left) + ln3 * hash(right);
 	==> Extension:	¸øÒ»¶Ñ Binary tree£¬ºÏ²¢ÏàÍ¬×ÓÊ÷ // element of programming interview Q 12.4 
 	==> ¹Ø¼üÊÇ hash function: h(full) = 1, h(n) = 3*val + 5 * h(n->left) + 7 * h(n->right); 
 		// ¾õµÃÓĞÎÊÌâ Ó¦¸ÃÊÇ ËØÊıµÄÀÛ³Ë, È¡ lg ºóÓ¦Îª h(n) = ln 3* val + ln 5 * h(l) + ln 7 * h(r);
-}
-
+```
 Same Tree{// no error pass
 	  bool isSameTree(TreeNode*t1,TreeNode*t2){
         if(t1==NULL || t2 == NULL) return t1 == t2;
         return t1->val != t2->val && isSameTree(t1->left,t2->left) && isSameTree(t1->right,t2->right);
     }
 }
+```
 
-Symmetric Tree{
+* Symmetric Tree
 		==> ´íÎó
 			* µİ¹éÊ±Ó¦ÓÃ t1->left Óë t2->right ½»´í±È½Ï£¬¶ø²»ÊÇ left v.s. right.
 			* if(t1->val != t1->val) return false; ÀïÓĞ typo, µÚ¶ş¸ö t1->val Ó¦Îª t2->val
 
+```
     bool isSymmetricTree(TreeNode *t1, TreeNode* t2) {// 
     	if(t1==NULL || t2 == NULL) return t1 == t2;
     	return t1->val != t2->val && isSymmetricTree(t1->left,t2->right) && isSameTree(t1->right,t2->left);
     }
-}
+```
 
-Unqiue BST{// Num of unique BST with n distinct numbers
+* Unqiue BST// Num of unique BST with n distinct numbers
+```
     int numTrees(int n) {// 2013.09.23 DP convolution: f_k = f_{k-1} + f_{k-2}  * f_1+ .... +f_1 * f{k-2} + f_{k-1}
         if(n < 3) return n;
         int* r = new int[n+1]; 
@@ -304,9 +320,10 @@ Unqiue BST{// Num of unique BST with n distinct numbers
         delete[] r;
         return result;
     }
-}
+```
 
-Unqiue BST II{// Generate all BST, ÓÃµİ¹é£¬µ«Òª×¢Òâ²»ÒªÖØ¸´ÀÍ¶¯
+* Unqiue BST II// Generate all BST, ÓÃµİ¹é£¬µ«Òª×¢Òâ²»ÒªÖØ¸´ÀÍ¶¯
+```
 		TreeNode * CopyAddTrees(TreeNode * OldTree, int AddNum){
 			if(OldTree == 0) return 0;
 			TreeNode * temp = new TreeNode(OldTree->val+AddNum);
@@ -349,24 +366,29 @@ Unqiue BST II{// Generate all BST, ÓÃµİ¹é£¬µ«Òª×¢Òâ²»ÒªÖØ¸´ÀÍ¶¯
       generateTrees_Sub(n, Result);    	
     	return Result[n];
     }
-}
+```
 
-Maximum Depth of Binary Tree{// ÓĞÒ»´í: int leftDep = rightDep = 0; ÓĞ compile ´íÎó 2013.05.01
+* Maximum Depth of Binary Tree// ÓĞÒ»´í: int leftDep = rightDep = 0; ÓĞ compile ´íÎó 2013.05.01
+```
     int maxDepth(TreeNode *root) {
         if(!root) return 0;
         return max(maxDepth(root->left),maxDepth(root->right)) + 1;
     }
-}
+```
 
-Minimum Depth of Binary Tree{//  ÓĞ´í£¬¶ÔÓÚ½öÓĞÒ»×ÓµÄnode depth Ö»¼Æµ½¸Ã node. 2013.05.02
+* Minimum Depth of Binary Tree
+//  ÓĞ´í£¬¶ÔÓÚ½öÓĞÒ»×ÓµÄnode depth Ö»¼Æµ½¸Ã node. 2013.05.02
+```
     int minDepth(TreeNode *root) {
         if(!root) return 0;
         return min(minDepth(root->left),minDepth(root->right)) + 1;
     }
-}
+```
 
-Balanced Binary Tree{//  2013.05.01 ×óÓÒ×ÓÊ÷×î¶àÏà²î 1
-	  bool isBalanced(TreeNode *root) {
+* Balanced Binary Tree//  2013.05.01 ×óÓÒ×ÓÊ÷×î¶àÏà²î 1
+```
+
+    bool isBalanced(TreeNode *root) {
         return TreeMaxDepth(root);
     }
     bool TreeMaxDepth(TreeNode *root, int& MaxDepth){
@@ -380,9 +402,10 @@ Balanced Binary Tree{//  2013.05.01 ×óÓÒ×ÓÊ÷×î¶àÏà²î 1
         MaxDepth = max(l,r)+1;
         return l-r <= 1 && r-l <= 1;
     }
-}
+```
 
-Convert Sorted Array to Binary Search Tree{// ³ö´í: mid Ã»ÓĞ¶¨Òå 2013.05.01
+* Convert Sorted Array to Binary Search Tree// ³ö´í: mid Ã»ÓĞ¶¨Òå 2013.05.01
+```
     TreeNode *sortedArrayToBST_sub(const int* n, int size) {
         if(size == 0) return NULL;
         int mid = size >> 2;
@@ -391,9 +414,10 @@ Convert Sorted Array to Binary Search Tree{// ³ö´í: mid Ã»ÓĞ¶¨Òå 2013.05.01
         root->right = sortedArrayToBST_sub(n+mid+1,size-mid-1);
         return root;
     }
-}
+```
 
-Convert Sorted List to Binary Search Tree{// Óë array ¿ÉÒÔÖªµÀ size ²»Ò»Ñù£¬ ĞèÒªÕÒµ½size. Á½¸ö pointers, step ·Ö±ğÊÇ1ºÍ2. 2013.05.01, 2013.09.22
+* Convert Sorted List to Binary Search Tree// Óë array ¿ÉÒÔÖªµÀ size ²»Ò»Ñù£¬ ĞèÒªÕÒµ½size. Á½¸ö pointers, step ·Ö±ğÊÇ1ºÍ2. 2013.05.01, 2013.09.22
+```
     TreeNode *sortedListToBST(ListNode *head) {
         if(head == 0) return NULL;
         ListNode p(0); 
@@ -414,14 +438,14 @@ Convert Sorted List to Binary Search Tree{// Óë array ¿ÉÒÔÖªµÀ size ²»Ò»Ñù£¬ ĞèÒ
 	      }
         return root;
     }
-}
+```
 
-Recover Binary Search Tree{// 2013.09.22 ÓÃÉÏÏÂ½çÖ¸ÕëÅĞ¶Ï, ÆäÖĞÁ½½áµã³ö´í
+* Recover Binary Search Tree// 2013.09.22 ÓÃÉÏÏÂ½çÖ¸ÕëÅĞ¶Ï, ÆäÖĞÁ½½áµã³ö´í
 	==> solution: ÓÃ inorder travel ±£³Ö pre ÕÒ³öÆäÁ½¸öÖ¸ÕëÎ»ÖÃ£¬½ÔÂú×ã cur < pre£¬ ÔÙ×ª»»Ôò¿É
 	// http://fisherlei.blogspot.com/2012/12/leetcode-recover-binary-search-tree.html
-}
 
-Flatten Binary Tree to Linked List{// 2013.05.02 VC ÎŞ´í£¬µ«ÊÇ Leetcode ÉÏÓĞ´í
+* Flatten Binary Tree to Linked List// 2013.05.02 VC ÎŞ´í£¬µ«ÊÇ Leetcode ÉÏÓĞ´í
+```
     void flatten(TreeNode *root) {
         lastNodePt(root);
     }
@@ -432,14 +456,16 @@ Flatten Binary Tree to Linked List{// 2013.05.02 VC ÎŞ´í£¬µ«ÊÇ Leetcode ÉÏÓĞ´í
 			tempP->right = root->right;
 			return lastNodePt(root->right);
     }
-}
+```
 
-Populating Next Right Pointers in Each Node{// 2013.09.22 ÎŞ´íÍ¨¹ı
+* Populating Next Right Pointers in Each Node{// 2013.09.22 ÎŞ´íÍ¨¹ı
 	==> Ë¼Ïë£ºÓÃµİ¹é£¬È»ºó´Ó×óÓÒ×ÓÊ÷¿ªÊ¼£¬ÓÒ×ÓÊ÷×ß×î×ó£¬×ó×ÓÊ÷×ß×îÓÒ£¬°ÑÍ¬Ò»²ãÏàÁ¬¼´¿É
   ==> Solution 2: ÓÃ stack ´Ó root ×ß×î×ó±ß½ç£¬Ã¿Ò»½áµã¼ÇÂ¼²ãÊı
 }
     
-Validate Binary Search Tree{// ³ö´í: (1) ÎŞÂÛ×óÓÒ×ÓÊ÷¶¼ĞèÒª×î´óÖµÓë×îĞ¡Öµ (2) ÒıÓÃ²»ÄÜÓĞÄ¬ÈÏ²ÎÊı TreeNode*&m=NULL ³ö´í
+* Validate Binary Search Tree
+// ³ö´í: (1) ÎŞÂÛ×óÓÒ×ÓÊ÷¶¼ĞèÒª×î´óÖµÓë×îĞ¡Öµ (2) ÒıÓÃ²»ÄÜÓĞÄ¬ÈÏ²ÎÊı TreeNode*&m=NULL ³ö´í
+```
     bool isValidBST(TreeNode *root) {
         return MaxMinBST(root,INT_MIN-1ll,INT_MAX+1ll));
     }
@@ -447,21 +473,22 @@ Validate Binary Search Tree{// ³ö´í: (1) ÎŞÂÛ×óÓÒ×ÓÊ÷¶¼ĞèÒª×î´óÖµÓë×îĞ¡Öµ (2) Òı
         if(!root) return true;
         return MaxMinBST(root->left,m,root->val) && MaxMinBST(root->right,root->val,M) && (root->val > m && root->val < M);
     }
-}   
+```
 
-Given n-strings, ÕÒ string chain (¼´Ç° string ×îºóÒ»¸ö×ÖÄ¸ == ºó string µÚÒ»¸ö×ÖÄ¸){
+* Given n-strings, ÕÒ string chain (¼´Ç° string ×îºóÒ»¸ö×ÖÄ¸ == ºó string µÚÒ»¸ö×ÖÄ¸)
 	 e.g. 3 strings: "sdfg","dfgs","ghjhk"; chain is "dfgsdfghjhk"
 	 ==> solution: full path pass all nodes, topological sort, 
 	 	1. vector<int> a; vector< vector<int> > FirstLetter(26,a),LastLetter(26,a);
-}
 
-Give a list of events in the following structure. Set the conflict flag to true if the event conflicts with any other event in the list{
+
+* Give a list of events in the following structure. Set the conflict flag to true if the event conflicts with any other event in the list
+```
 	class Event
 	{
 	    int start;
 	    int end;
 	    bool conflict;
 	}
+```
 	==> solution: interval tree construct O(nlgn) inquire O(lgn+m)
-}
 

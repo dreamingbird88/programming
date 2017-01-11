@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>Typing</title>
+<meta charset="UTF-8" />
+<style>
+  div > scan {
+    white-space: pre;
+  }
+  #summary > scan {
+    color: blue;
+    font-size:20px;
+  }
+  #statics {
+    font-size:30px;
+    margin-left: auto;
+    margin-right: auto;
+    color: blue;
+  }
+  #focus {
+    font-size:100px;
+    font-weight: bold;
+    color: green;
+  }
+  #leftTxt {
+    font-size:30px;
+    display: inline-block;
+    color: rgb(130, 130, 130);
+  }
+  #rightTxt {
+    font-size:50px;
+    display: inline-block;
+  }
+  #print {
+    height: 160px;
+  }
+  .middle {
+    width: 675px;
+    height: 160px;
+  }
+  #keyboard {
+    width: 675px;
+    height: 225px;
+  }
+  .hand {
+    background-size: 150px 150px;
+    width: 150px;
+    height: 120px;
+    display: inline-block;
+  }
+  #left_hand {
+    background-image: url(left_hand.png);
+    float: left;
+  }
+  #right_hand {
+    background-image: url(right_hand.png);
+    float: right;
+  }
+</style>
+<script>
+// ------------------------- keyboard ----------------------- //
+var hintColor = "background-color: rgb(0, 255, 0);";
+var keyboardName = new Map([
+  ['tilde', ['~', '`']],
+  ['one', ['!', '1']],
+  ['two', ['@', '2']],
+  ['three', ['#', '3']],
+  ['four', ['$', '4']],
+  ['five', ['%', '5']],
+  ['six', ['^', '6']],
+  ['seven', ['&', '7']],
+  ['eight', ['*', '8']],
+  ['nine', ['(', '9']],
+  ['zero', [')', '0']],
+  ['dash', ['_', '-']],
+  ['plus', ['+', '=']],
+  ['backspace', ['Back']],
+  ['l1', []],
+  ['tab', ['Tab']],
+  ['q', ['q']],
+  ['w', ['w']],
+  ['e', ['e']],
+  ['r', ['r']],
+  ['t', ['t']],
+  ['y', ['y']],
+  ['u', ['u']],
+  ['i', ['i']],
+  ['o', ['o']],
+  ['p', ['p']],
+  ['leftBrace', ['{', '[']],
+  ['rightBrace', ['}', ']']],
+  ['backSlash', ['|', '\\']],
+  ['l2', []],
+  ['caps', ['Caps']],
+  ['a', ['a']],
+  ['s', ['s']],
+  ['d', ['d']],
+  ['f', ['f']],
+  ['g', ['g']],
+  ['h', ['h']],
+  ['j', ['j']],
+  ['k', ['k']],
+  ['l', ['l']],
+  ['semiComma', [':',';']],
+  ['quote', ['"','\'']],
+  ['enter', ['Enter']],
+  ['l3', []],
+  ['leftShift', ['Shift']],
+  ['z', ['z']],
+  ['x', ['x']],
+  ['c', ['c']],
+  ['v', ['v']],
+  ['b', ['b']],
+  ['n', ['n']],
+  ['m', ['m']],
+  ['comma', ['<',',']],
+  ['dot', ['>','.']],
+  ['forwardSlash', ['?','/']],
+  ['rightShift', ['Shift']],
+  ['l4', []],
+  ['leftCtrl', ['Ctrl']],
+  ['invisable1', [' ']],
+  ['leftAlt', ['Alt']],
+  ['space', ['  ']],
+  ['rightAlt', ['Alt']],
+  ['invisable2', [' ']],
+  ['rightCtrl', ['Ctrl']]
+]);
+var keyWidth = new Map([
+  ['backspace', 90],
+  ['tab', 68],
+  ['backSlash', 65],
+  ['caps', 85],
+  ['enter', 95],
+  ['leftShift', 112],
+  ['rightShift', 113],
+  ['leftCtrl', 65],
+  ['rightCtrl', 65],
+  ['leftAlt', 80],
+  ['rightAlt', 80],
+  ['space', 205],
+  ['invisable1', 80],
+  ['invisable2', 100]
+]);
+var finger = new Map([
+    ["l1", [13,50]],
+    ["l2", [40,25]],
+    ["l3", [65,15]],
+    ["l4", [98,28]],
+    ["l5", [135,75]],
+    ["r1", [137,50]],
+    ["r2", [110,25]],
+    ["r3", [85,15]],
+    ["r4", [52,28]],
+    ["r5", [15,75]],
+]);
+var keyMap = new Map();
+var Char2Keys = new Map([
+    ['a', [['a', 'l1']]],
+    ['b', [['b', 'l4']]],
+    ['c', [['c', 'l3']]],
+    ['d', [['d', 'l3']]],
+    ['e', [['e', 'l3']]],
+    ['f', [['f', 'l4']]],
+    ['g', [['g', 'l4']]],
+    ['h', [['h', 'r4']]],
+    ['i', [['i', 'r3']]],
+    ['j', [['j', 'r4']]],
+    ['k', [['k', 'r3']]],
+    ['l', [['l', 'r2']]],
+    ['m', [['m', 'r4']]],
+    ['n', [['n', 'r4']]],
+    ['o', [['o', 'r2']]],
+    ['p', [['p', 'r1']]],
+    ['q', [['q', 'l1']]],
+    ['r', [['r', 'l4']]],
+    ['s', [['s', 'l2']]],
+    ['t', [['t', 'l4']]],
+    ['u', [['u', 'r4']]],
+    ['v', [['v', 'l4']]],
+    ['w', [['w', 'l2']]],
+    ['x', [['x', 'l2']]],
+    ['y', [['y', 'r4']]],
+    ['z', [['z', 'l1']]],
+    ['A', [['a', 'l1'], ['rightShift', 'r1']]],
+    ['B', [['b', 'l4'], ['rightShift', 'r1']]],
+    ['C', [['c', 'l3'], ['rightShift', 'r1']]],
+    ['D', [['d', 'l3'], ['rightShift', 'r1']]],
+    ['E', [['e', 'l3'], ['rightShift', 'r1']]],
+    ['F', [['f', 'l4'], ['rightShift', 'r1']]],
+    ['G', [['g', 'l4'], ['rightShift', 'r1']]],
+    ['H', [['h', 'r4'], ['leftShift', 'l1']]],
+    ['I', [['i', 'r3'], ['leftShift', 'l1']]],
+    ['J', [['j', 'r4'], ['leftShift', 'l1']]],
+    ['K', [['k', 'r3'], ['leftShift', 'l1']]],
+    ['L', [['l', 'r2'], ['leftShift', 'l1']]],
+    ['M', [['m', 'r4'], ['leftShift', 'l1']]],
+    ['N', [['n', 'r4'], ['leftShift', 'l1']]],
+    ['O', [['o', 'r2'], ['leftShift', 'l1']]],
+    ['P', [['p', 'r1'], ['leftShift', 'l1']]],
+    ['Q', [['q', 'l1'], ['rightShift', 'r1']]],
+    ['R', [['r', 'l4'], ['rightShift', 'r1']]],
+    ['S', [['s', 'l2'], ['rightShift', 'r1']]],
+    ['T', [['t', 'l4'], ['rightShift', 'r1']]],
+    ['U', [['u', 'r4'], ['rightShift', 'r1']]],
+    ['V', [['v', 'l4'], ['rightShift', 'r1']]],
+    ['W', [['w', 'l2'], ['rightShift', 'r1']]],
+    ['X', [['x', 'l2'], ['rightShift', 'r1']]],
+    ['Y', [['y', 'r4'], ['leftShift', 'l1']]],
+    ['Z', [['z', 'l1'], ['rightShift', 'r1']]],
+    [' ', [['space', 'l5'], ['space', 'r5']]],
+    ['~', [['tilde', 'l1'], ['rightShift', 'r1']]],
+    ['`', [['tilde', 'l1']]],
+    ['!', [['one', 'l1'], ['rightShift', 'r1']]],
+    ['1', [['one', 'l1']]],
+    ['@', [['two', 'l2'], ['rightShift', 'r1']]],
+    ['2', [['two', 'l2']]],
+    ['#', [['three', 'l3'], ['rightShift', 'r1']]],
+    ['3', [['three', 'l3']]],
+    ['$', [['four', 'l4'], ['rightShift', 'r1']]],
+    ['4', [['four', 'l4']]],
+    ['%', [['five', 'l4'], ['rightShift', 'r1']]],
+    ['5', [['five', 'l4']]],
+    ['^', [['six', 'r4'], ['rightShift', 'r1']]],
+    ['6', [['six', 'r4']]],
+    ['&', [['seven', 'r4'], ['leftShift', 'l1']]],
+    ['7', [['seven', 'r4']]],
+    ['*', [['eight', 'r3'], ['leftShift', 'l1']]],
+    ['8', [['eight', 'r3']]],
+    ['(', [['nine', 'r2'], ['leftShift', 'l1']]],
+    ['9', [['nine', 'r2']]],
+    [')', [['zero', 'r1'], ['leftShift', 'l1']]],
+    ['0', [['zero', 'r1']]],
+    ['_', [['dash', 'r1'], ['leftShift', 'l1']]],
+    ['-', [['dash', 'r1']]],
+    ['+', [['plus', 'r1'], ['leftShift', 'l1']]],
+    ['=', [['plus', 'r1']]],
+    ['{', [['leftBrace', 'r1'], ['leftShift', 'r1']]],
+    ['[', [['leftBrace', 'r1']]],
+    ['}', [['rightBrace', 'r1'], ['leftShift', 'r1']]],
+    [']', [['rightBrace', 'r1']]],
+    ['|', [['backSlash', 'r1'], ['leftShift', 'r1']]],
+    ['\\', [['backSlash', 'r1']]],
+    [':', [['semiComma', 'r1'], ['leftShift', 'r1']]],
+    [';', [['semiComma', 'r1']]],
+    ['"', [['quote', 'r1'], ['leftShift', 'l1']]],
+    ['\'', [['quote', 'r1']]],
+    ['<', [['comma', 'r1'], ['leftShift', 'l1']]],
+    [',', [['comma', 'r1']]],
+    ['>', [['dot', 'r1'], ['leftShift', 'l1']]],
+    ['.', [['dot', 'r1']]],
+    ['?', [['forwardSlash', 'r1'], ['leftShift', 'l1']]],
+    ['/', [['forwardSlash', 'r1']]],
+]);
+
+// http://www.w3schools.com/html/html5_canvas.asp
+function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+  if (typeof radius === "undefined") {
+    radius = 5;
+  }
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+  if (typeof stroke == "undefined" ) {
+    stroke = true;
+  }
+  if (stroke) {
+    ctx.stroke();
+  }
+  if (fill) {
+    ctx.fill();
+  }        
+}
+function plotKey(w) {
+  var canvas = document.createElement("CANVAS");
+  canvas.width=(typeof w === "undefined"?45:w);
+  canvas.height=45;
+  var ctx = canvas.getContext("2d");
+  ctx.font = "18px Rome";
+  // roundRect(ctx, 5, 5, 50, 50, 5, true);
+  // ctx.fillStyle = "rgb(0, 255, 0)";
+  // ctx.strokeStyle = "rgb(255, 0, 0)";
+  // key.style = hintColor;
+  roundRect(ctx, 2, 2, canvas.width-4, canvas.height-4);
+  return canvas;
+}
+// Return key to fill color later.
+function Create1Key(k,w) {
+  var key = plotKey(w);
+  key.getContext("2d").fillText(k,18,28);
+  return key;
+}
+function Create2Key(k1,k2,w) {
+  var key = plotKey(w);
+  var ctx = key.getContext("2d");
+  ctx.fillText(k1,10,20);
+  ctx.fillText(k2,24,36);
+  return key;
+}
+function clearFinger(name){
+  var hand = (name[0] == 'l'? 'left_finger':'right_finger');
+  document.getElementById(hand).getContext("2d").clearRect(0,0,150,120);
+}
+function plotFinger(name) {
+  var hand = (name[0] == 'l'? 'left_finger':'right_finger');
+  var ctx = document.getElementById(hand).getContext("2d");
+  var pos = finger.get(name);
+  ctx.beginPath();
+  ctx.arc(pos[0],pos[1],8,0,2*Math.PI);
+  ctx.stroke();
+  ctx.fillStyle = "rgb(0, 255, 0)";
+  ctx.fill();
+}
+function plotInfo(char) {
+  clearPrevKey();
+  for (var [k, f] of Char2Keys.get(char)) {
+    // console.log(k + "; " + f);
+    keyMap.get(k).style = hintColor;
+    plotFinger(f);
+  }
+  prevKey = char;
+}
+
+function InitKeyboard() {
+  var keyboard = document.getElementById("keyboard");
+  for (var [k, v] of keyboardName) {
+    if (v.length == 0) {
+      keyboard.appendChild(document.createElement("BR"));
+      continue;
+    }
+    w = keyWidth.get(k);
+    var key = (v.length == 1? key = Create1Key(v[0], w): Create2Key(v[0], v[1], w));
+    keyMap.set(k, key);
+    keyboard.appendChild(key);
+  }
+  for (var [k, v] of keyWidth) {
+    keyMap.get(k).getContext("2d").width = v;
+  }
+}
+// ------------------------- press update ----------------------- //
+var prevKey;
+var typed;
+var rest;
+var speed;
+var correct;
+var start;
+var timeDisp;
+var timer;
+var correctRates = new Map();
+// var sentence = "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var sentence = "abc";
+var inputInd;
+
+function pressKey(e) {
+  var code = e.which || e.keyCode || 0;
+  if (code < 32 || code > 126) return;
+  updateSentence(String.fromCharCode(code));
+  /*
+  keyMap.get("leftAlt").style = (e.altKey?hintColor:"");
+  keyMap.get("leftCtrl").style = (e.ctrlKey?hintColor:"");
+  keyMap.get("enter").style = (code==13?hintColor:"");
+  */
+}
+function clearPrevKey() {
+  if (typeof prevKey != "undefined") {
+    for (var [k, f] of Char2Keys.get(prevKey)) {
+      keyMap.get(k).style = "";
+      clearFinger(f);
+    }
+  }
+}
+function InitSentence(halfSize) {
+  inputInd = 0;
+  left = document.getElementById("leftTxt");
+  right = document.getElementById("rightTxt");
+  var i = 0;
+  for (; i < halfSize; ++i) {
+    var subDiv = document.createElement("DIV");
+    var scan = createScan(' ');
+    subDiv.appendChild(scan);
+    subDiv.appendChild(document.createElement("BR"));
+    subDiv.appendChild(scan);
+    subDiv.style.display = "inline-block";
+    left.appendChild(subDiv);
+  }
+  focus = document.getElementById("focus");
+  focus.innerHTML = sentence[inputInd++];
+  for (i = 0; i < halfSize && inputInd < sentence.length; ++i) {
+    right.appendChild(createScan(sentence[inputInd++]));
+  }
+  plotInfo(focus.innerHTML);
+}
+function updateSentence(char) {
+  right = document.getElementById("rightTxt");
+  focus = document.getElementById("focus");
+  var isCorrect = focus.innerHTML == char;
+
+  updateCorrectRates(focus.innerHTML, isCorrect);
+
+  left = document.getElementById("leftTxt");
+  subDiv = document.createElement("DIV");
+  subDiv.appendChild(createScan(focus.innerHTML));
+  subDiv.appendChild(document.createElement("BR"));
+  scan = document.createElement("SCAN");
+  scan.innerHTML = char;
+  scan.style.color = (isCorrect? "green":"red");
+  subDiv.appendChild(scan);
+  subDiv.style.display = "inline-block";
+  left.appendChild(subDiv);
+  left.removeChild(left.childNodes[0]);
+
+  if (inputInd < sentence.length) {
+    right.appendChild(createScan(sentence[inputInd++]));
+  }
+  if (right.childNodes.length != 0) {
+    focus.innerHTML = right.childNodes[0].innerHTML;
+    right.removeChild(right.childNodes[0]);
+    plotInfo(focus.innerHTML);
+  } else {
+    clearInterval(timer);
+    document.body.removeEventListener('keypress', pressKey);
+    clearPrevKey();
+    focus.innerHTML = "";
+    dispSummary();
+  }
+  updateStatics(isCorrect);
+}
+function createScan(s) {
+  var scan = document.createElement("SCAN");
+  scan.innerHTML = s;
+  return scan;
+}
+function updateTimer() {
+  var ms = Date.now() - start;
+  min = Math.floor((ms/1000/60)),
+  sec = Math.floor((ms/1000) % 60);
+  if (min < 10) min = "0" + min;
+  if (sec < 10) sec = "0" + sec;
+  timeDisp.innerHTML = min + ":" + sec;
+  speed.innerHTML = Math.floor(typed * 60000 / ms);
+}
+function InitStatics() {
+  typed = 0;
+  correct = 0;
+  rest = document.getElementById("rest");
+  rest.innerHTML = sentence.length - typed;
+  var t = document.getElementById("typed");
+  t.innerHTML = correct + " / " + typed;
+  timeDisp = document.getElementById("time");
+  timeDisp.innerHTML = "00:00";
+  speed = document.getElementById("speed");
+  start = 0;
+}
+function updateCorrectRates(c, isCorrect) {
+  var rate = correctRates.get(c);
+  if (typeof rate === "undefined") {
+    correctRates.set(c, [(isCorrect?1:0), 1]);
+  } else {
+    correctRates.set(c, [rate[0]+(isCorrect?1:0), rate[1]+1]);
+  }
+}
+function dispSummary() {
+  var summary = document.getElementById("summary");
+  var statics = document.getElementById("statics");
+  summary.appendChild(statics);
+  var main = document.getElementById("main");
+  main.style.display = "none";
+
+  for (var [k, v] of correctRates) {
+    summary.appendChild(document.createElement("BR"));
+    var str = k + ": " + v[0] + "/" + v[1] + "  " + Math.floor(v[0]/v[1]*100) + "%";
+    summary.appendChild(createScan(str));
+  }
+}
+function updateStatics(isCorrect) {
+  if (start == 0) {
+    start = Date.now();
+    timer = setInterval(updateTimer, 1000);
+  }
+  typed += 1;
+  correct += isCorrect;
+  var t = document.getElementById("typed");
+  t.innerHTML = correct + " / " + typed;
+  rest.innerHTML = sentence.length - typed;
+}
+// ------------------------- initialize ----------------------- //
+function init() {
+  InitKeyboard();
+  InitSentence(12);
+  InitStatics();
+  document.body.addEventListener('keypress', pressKey);
+}
+
+</script>
+</head>
+<body onload="init()">
+
+<div style="margin-left:auto;margin-right:auto;" id="main">
+  <div id="statics">
+    <span>Rest: </span>
+    <span id="rest"></span>
+    <span style="margin-left: 20px">Typed: </span>
+    <span id="typed"></span>
+    <span style="margin-left: 20px">Time: </span>
+    <span id="time"></span>
+    <span style="margin-left: 20px">Speed: </span>
+    <span id="speed"></span>
+  </div>
+  <div id="print">
+    <div id="leftTxt"></div>
+    <span>&nbsp;</span>
+    <span id="focus"></span>
+    <span>&nbsp;</span>
+    <div id="rightTxt"></div><br>
+  </div>
+  <div class="middle">
+    <div class="hand" id="left_hand"><canvas id="left_finger"></canvas></div>
+    <div class="hand" id="right_hand"><canvas id="right_finger"></canvas></div>
+  </div>
+  <div id="keyboard"></div>
+</div>
+<div id="summary"> </div>
+
+</body></html>

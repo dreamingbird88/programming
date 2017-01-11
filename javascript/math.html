@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>Math Practise</title>
+<meta charset="UTF-8" />
+<style>
+  li {
+      display: table-row;
+  }
+  .wrong {
+    background-color: red;		
+    /* margin-right: 10px; */
+  }
+  .right {
+    background-color: green;		
+    /*padding-left: 10px;*/
+  }
+  #answer {
+    font-weight: bold;
+    font-size:60px;
+    /*background-color: rgb(255,0,255);		*/
+    background-color: lightgreen;		
+    border: 0px;
+    /* maxlength: 5px; useless NOT recognized by css. */
+    width: 90px;
+  }
+  /* .equal, .info { */
+  .info {
+    font-size:30px;
+    text-align: center;
+    background-color: pink;		
+  }
+  .info > span {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .equal {
+    font-weight: bold;
+    font-size:60px;
+    text-align: center;
+    background-color: red;		
+  }
+</style>
+<script>
+
+function multiply() {
+  a = Math.floor(Math.random() * 9) + 1; 
+  b = Math.floor(Math.random() * 9) + 1; 
+  c = Math.floor(Math.random() * 9) + 1; 
+  //return a + " * " + b + " + " + c;
+  return a + " * " + b;
+}
+
+function add() {
+  a = Math.floor(Math.random() * 9) + 1; 
+  b = Math.floor(Math.random() * 9) + 1; 
+  c = Math.floor(Math.random() * 10) + 1; 
+  return a * b + " + " + c;
+}
+
+function subtract() {
+  a = Math.floor(Math.random() * 10) + 10; 
+  b = Math.floor(Math.random() * (a-1)) + 1; 
+  return a + " - " + b;
+}
+
+function genQuestion() {
+  var question = document.getElementById('question');
+  var questions = [];
+  if (questionSelector & 1) {
+    questions.push(add());
+  }
+  if (questionSelector & 2) {
+    questions.push(subtract());
+  }
+  if (questionSelector & 4) {
+    questions.push(multiply());
+  }
+  var r = Math.floor(Math.random() * questions.length);
+  question.innerHTML = questions[r];
+}
+
+function addRecord(question, input) {
+  var recordDiv = document.getElementById('record');
+  var answer = eval(question);
+
+  var liElement = document.createElement("li");
+  var text = document.createElement("span");
+  text.appendChild(document.createTextNode(question + " = " + answer + "\t"));
+  liElement.appendChild(text);
+  var ans = document.createElement("span");
+  ans.appendChild(document.createTextNode("   " + input));
+  if (input != answer) {
+    addCounter(false);
+    ans.className = "wrong";
+  } else {
+    ans.className = "right";
+    addCounter(true);
+    // alert('OK');
+  }
+  liElement.appendChild(ans);
+  // recordDiv.appendChild(liElement);
+  recordDiv.insertBefore(liElement, recordDiv.childNodes[0]);
+}
+
+function checkAnswer() {
+  var question = document.getElementById('question');
+  var input = document.getElementById('answer');
+  addRecord(question.innerHTML, input.value);
+  genQuestion();
+  input.value = "";
+}
+
+function timer() {
+  var time = document.getElementById('time');
+  var c = parseInt(time.innerHTML) - 1;
+  if (c < 0) {
+    var q = document.getElementsByClassName('equal');
+    q[0].style.display="none";
+    // alert("Time is up!");
+  } else {
+    time.innerHTML = parseInt(time.innerHTML) - 1;
+  }
+  // var d = new Date()
+  // time.innerHTML = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+  // time.innerHTML = d.toLocaleTimeString();
+}
+
+function addCounter(right) {
+  var total = document.getElementById('total');
+  var correct = document.getElementById('correct');
+  var not = document.getElementById('not');
+  total.innerHTML = parseInt(total.innerHTML) + 1;
+  if (right) {
+    correct.innerHTML = parseInt(correct.innerHTML) + 1;
+    // audio file: C:\Windows\Media
+    document.getElementById('right').play();
+  } else {
+    not.innerHTML = parseInt(not.innerHTML) + 1;
+    document.getElementById('wrong').play();
+  }
+}
+
+function setCounter() {
+  var total = document.getElementById('total');
+  var correct = document.getElementById('correct');
+  var not = document.getElementById('not');
+  total.innerHTML = 0;
+  correct.innerHTML = 0;
+  not.innerHTML = 0;
+}
+
+
+var questionSelector = 4; // 1: add; 2: subtract; 4: multiply
+function init() {
+  var time = document.getElementById('time');
+  time.innerHTML = 100;
+  genQuestion();
+  setCounter(0, 0);
+//  var id = setInterval(timer, 1000);
+}
+
+</script></head>
+<body onload="init()">
+
+<div class='info'>
+  <span>Time: </span><span id='time'></span>
+  <span>Total: </span><span id='total'></span>
+  <span>Right: </span><span id='correct'></span>
+  <span>Wrong: </span><span id='not'></span>
+</div>
+
+<audio id="right" src="right.wav" preload="auto"></audio>
+<audio id="wrong" src="wrong.wav" preload="auto"></audio>
+
+<div class='equal'>
+<span id='question'></span>  = 
+<input type='text' id='answer' maxlength=2 onkeydown='if (event.keyCode == 13) checkAnswer()'></input>
+</div>
+
+<div id='record'>
+</div>
+
+</body></html>

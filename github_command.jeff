@@ -8,6 +8,7 @@ git clone kaggle
 git config --list
 git clone https://github.com/dreamingbird88/kaggle
 git remote add name https://github.com/dreamingbird88/kaggle/
+git remote add program https://github.com/dreamingbird88/programming/
 sudo git config --system core.editor vim
 git config --global user.email jeffnju@gmail.com
 git config --global user.name dreamingbird88
@@ -26,13 +27,15 @@ git add README.md
 git commit -m "first commit"
 git clone https://github.com/dreamingbird88/for_qi
 git remote add for_qi https://github.com/dreamingbird88/for_qi
+
 git remote set-url programming https://github.com/dreamingbird88/programming
 
-git push -u programming master
+git push -u program master
 
-git commit -m "Practice notes."
+git commit -a -m "python script combining passport photos for print"
 
 git add array_linklist_string.md  graph.md     
+git add math.html typing.htm
 
 git fetch for_qi master
 
@@ -41,7 +44,7 @@ git commit -m "Update python/qi_skull.py"
 git push -u programming master
 
 git rm -r programming
-git commit -m "Delete a directory."
+git commit -m "Some javascripts for kids education."
 git push -u for_qi master
 
 # Delete a repository

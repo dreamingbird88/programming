@@ -59,13 +59,12 @@ function add() {
 }
 
 function subtract() {
-  a = Math.floor(Math.random() * 10) + 10; 
+  a = Math.floor(Math.random() * 20) + 10; 
   b = Math.floor(Math.random() * (a-1)) + 1; 
   return a + " - " + b;
 }
 
 function genQuestion() {
-  var question = document.getElementById('question');
   var questions = [];
   if (questionSelector & 1) {
     questions.push(add());
@@ -77,7 +76,7 @@ function genQuestion() {
     questions.push(multiply());
   }
   var r = Math.floor(Math.random() * questions.length);
-  question.innerHTML = questions[r];
+  question_el.innerHTML = questions[r];
 }
 
 function addRecord(question, input) {
@@ -96,7 +95,6 @@ function addRecord(question, input) {
   } else {
     ans.className = "right";
     addCounter(true);
-    // alert('OK');
   }
   liElement.appendChild(ans);
   // recordDiv.appendChild(liElement);
@@ -104,60 +102,72 @@ function addRecord(question, input) {
 }
 
 function checkAnswer() {
-  var question = document.getElementById('question');
   var input = document.getElementById('answer');
-  addRecord(question.innerHTML, input.value);
-  genQuestion();
-  input.value = "";
+  addRecord(question_el.innerHTML, input.value);
+  if (parseInt(total_el.innerHTML) >= questionTotal) {
+    var q_div = question_el.parentElement;
+    for (var c = q_div.childNodes.length -1; c >= 0; --c) {
+      q_div.removeChild(q_div.childNodes[c]);
+    }
+    var ms = Date.now() - start_time;
+    var min = Math.floor((ms/1000/60));
+    var sec = Math.floor((ms/1000) % 60);
+    total_time = document.createElement("span");
+    total_time.innerHTML = min + ":" + sec;
+    q_div.appendChild(total_time);
+  } else {
+    genQuestion();
+    input.value = "";
+  }
 }
 
 function timer() {
-  var time = document.getElementById('time');
-  var c = parseInt(time.innerHTML) - 1;
-  if (c < 0) {
-    var q = document.getElementsByClassName('equal');
-    q[0].style.display="none";
+  if (parseInt(time_el.innerHTML) < 1) {
+    document.getElementsByClassName('equal')[0].style.display="none";
     // alert("Time is up!");
   } else {
-    time.innerHTML = parseInt(time.innerHTML) - 1;
+    time_el.innerHTML = parseInt(time_el.innerHTML) - 1;
   }
   // var d = new Date()
-  // time.innerHTML = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-  // time.innerHTML = d.toLocaleTimeString();
+  // time_el.innerHTML = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+  // time_el.innerHTML = d.toLocaleTimeString();
 }
 
 function addCounter(right) {
-  var total = document.getElementById('total');
-  var correct = document.getElementById('correct');
-  var not = document.getElementById('not');
-  total.innerHTML = parseInt(total.innerHTML) + 1;
+  total_el.innerHTML = parseInt(total_el.innerHTML) + 1;
   if (right) {
-    correct.innerHTML = parseInt(correct.innerHTML) + 1;
+    correct_el.innerHTML = parseInt(correct_el.innerHTML) + 1;
     // audio file: C:\Windows\Media
-    document.getElementById('right').play();
+    document.getElementById('sound1').play();
   } else {
-    not.innerHTML = parseInt(not.innerHTML) + 1;
-    document.getElementById('wrong').play();
+    wrong_el.innerHTML = parseInt(wrong_el.innerHTML) + 1;
+    document.getElementById('sound0').play();
   }
 }
 
-function setCounter() {
-  var total = document.getElementById('total');
-  var correct = document.getElementById('correct');
-  var not = document.getElementById('not');
-  total.innerHTML = 0;
-  correct.innerHTML = 0;
-  not.innerHTML = 0;
-}
+var questionSelector = 3; // 1: add; 2: subtract; 4: multiply
+var questionTotal = 30;
 
-
-var questionSelector = 4; // 1: add; 2: subtract; 4: multiply
+var timer_fun;
+var start_time;
+var time_el;
+var total_el;
+var correct_el;
+var wrong_el;
+var question_el;
 function init() {
-  var time = document.getElementById('time');
-  time.innerHTML = 100;
+  time_el = document.getElementById('time');
+  total_el = document.getElementById('total');
+  correct_el = document.getElementById('correct');
+  wrong_el = document.getElementById('wrong');
+  question_el = document.getElementById('question');
+  // time.innerHTML = 100;
+  total_el.innerHTML = 0;
+  correct_el.innerHTML = 0;
+  wrong_el.innerHTML = 0;
+  // timer_fun = setInterval(timer, 1000);
+  start_time = new Date();
   genQuestion();
-  setCounter(0, 0);
-//  var id = setInterval(timer, 1000);
 }
 
 </script></head>
@@ -167,11 +177,11 @@ function init() {
   <span>Time: </span><span id='time'></span>
   <span>Total: </span><span id='total'></span>
   <span>Right: </span><span id='correct'></span>
-  <span>Wrong: </span><span id='not'></span>
+  <span>Wrong: </span><span id='wrong'></span>
 </div>
 
-<audio id="right" src="right.wav" preload="auto"></audio>
-<audio id="wrong" src="wrong.wav" preload="auto"></audio>
+<audio id="sound1" src="right.wav" preload="auto"></audio>
+<audio id="sound0" src="wrong.wav" preload="auto"></audio>
 
 <div class='equal'>
 <span id='question'></span>  = 

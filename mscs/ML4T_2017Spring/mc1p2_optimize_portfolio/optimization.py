@@ -1,5 +1,6 @@
 """MC1-P2: Optimize a portfolio."""
 
+
 import pandas as pd
 import matplotlib.pyplot as plt
 #import scipy.optimize as spo

@@ -12,14 +12,22 @@ git config --global user.email jeffnju@gmail.com
 git config --global user.name dreamingbird88
 
 git clone https://github.com/dreamingbird88/kaggle
-git remote add name https://github.com/dreamingbird88/kaggle/
-git remote add program https://github.com/dreamingbird88/programming/
+repo_name="program"
+git remote add ${repo_name} https://github.com/dreamingbird88/programming/
+git remote set-url programming https://github.com/dreamingbird88/programming
+# list remote names
+git remote -v
 
+# g4 sync
+git pull https://github.com/dreamingbird88/programming/
 
-git add programming/github_command.jeff
-#git status
-git commit -m "Upload github_command"
-git push -u origin master
+# Add, delete or move a file
+git add github_command.sh
+git rm github_command.jeff
+git mv MarkDown.md notes/
+
+git commit -m "Update github_command"
+git push -u ${repo_name} master
 
 # 1. First create a repository with browser.
 # 2. create a new repository on the command line
@@ -27,78 +35,22 @@ echo "# for_qi" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
-git clone https://github.com/dreamingbird88/for_qi
-git remote add for_qi https://github.com/dreamingbird88/for_qi
 
-git remote set-url programming https://github.com/dreamingbird88/programming
-
-git push -u program master
+git push -u ${repo_name} master
+git push
 
 git commit -a -m "python script combining passport photos for print"
 
-git add array_linklist_string.md  graph.md     
-git add math.html
-
+# Download and refresh from another repository
 git fetch for_qi master
-
-git add python/qi_skull.py
-git commit -m "Add timer for math.html"
-git push
-git push -u programming master
-
-is_new=true
-project="ML4T_2017Spring/mc1p2_optimize_portfolio/optimization.py"
-project="ML4T_2017Spring/mc1p1_assess_portfolio/analysis.py"
-git_dest=$githubdir/mscs/${project}
-mkdir -p  ${git_dest%/*}
-
-qi_source=$qidir/temp/${project} 
-if [ is_new ]; then
-  qi_source=$qidir/${project} 
-fi
-
-cp -p ${qi_source} ${git_dest%/*}
-
-cd ${githubdir}
-git add mscs/${project}
-git commit -m "Upload the original files for mscs homework."
-git push
-
-# user
-dreamingbird88
-# pw
-gdlj;jeff1980
-
-ls
 
 # Delete a repository
 # go to https://github.com/user_name/repository_name/setting
 # dangerous zone --> delete ...
 # local: rm -f -r dir_name
 
-# # or push an existing repository from the command line
-# git remote add origin https://github.com/dreamingbird88/finance.git
-# git push -u origin master
-
-# g4 sync
-git pull https://github.com/dreamingbird88/programming/
-
-# Create a new repository
-# Can NOT create a new repository AND update it by "git ..."
-# git init Finance
-git remote add finance https://github.com/dreamingbird88/finance/
-git clone finance
-# git clone https://github.com/dreamingbird88/for_qi
-
-# g4 change
-git config --global user.email jeffnju@gmail.com
-git config --global user.name dreamingbird88
-git commit
-
 # check the commit (change list)
 git status
-
-git push
 
 git commit --amend
 vim .gitignore
@@ -151,8 +103,23 @@ git checkout bcbef3e
 git revert bcbef3e
 git reset bcbef3e
 
-# list remote names
-git remote -v
+# ---------------------------------------------------------------------------- #
+cd ${githubdir}
 
-# Move a file
-git mv MarkDown.md notes/
+is_new=true
+project="ML4T_2017Spring/mc1p2_optimize_portfolio/optimization.py"
+project="ML4T_2017Spring/mc1p1_assess_portfolio/analysis.py"
+
+git_dest=$githubdir/mscs/${project}
+mkdir -p  ${git_dest%/*}
+qi_source=$qidir/temp/${project} 
+if [ is_new ]; then
+  qi_source=$qidir/${project} 
+fi
+cp -p ${qi_source} mscs/${project}
+git add mscs/${project}
+
+git commit -m "Modified mscs homework."
+git push
+
+vim ${qi_source} mscs/${project}

@@ -4,14 +4,16 @@
 #
 # 2015.06.25 Learn to use github.
 sudo apt-get install git
-git clone kaggle
+
+# Check config.
 git config --list
-git clone https://github.com/dreamingbird88/kaggle
-git remote add name https://github.com/dreamingbird88/kaggle/
-git remote add program https://github.com/dreamingbird88/programming/
 sudo git config --system core.editor vim
 git config --global user.email jeffnju@gmail.com
 git config --global user.name dreamingbird88
+
+git clone https://github.com/dreamingbird88/kaggle
+git remote add name https://github.com/dreamingbird88/kaggle/
+git remote add program https://github.com/dreamingbird88/programming/
 
 
 git add programming/github_command.jeff
@@ -35,17 +37,39 @@ git push -u program master
 git commit -a -m "python script combining passport photos for print"
 
 git add array_linklist_string.md  graph.md     
-git add math.html typing.htm
+git add math.html
 
 git fetch for_qi master
 
 git add python/qi_skull.py
-git commit -m "Update python/qi_skull.py"
+git commit -m "Add timer for math.html"
+git push
 git push -u programming master
 
-git rm -r programming
-git commit -m "Some javascripts for kids education."
-git push -u for_qi master
+is_new=true
+project="ML4T_2017Spring/mc1p2_optimize_portfolio/optimization.py"
+project="ML4T_2017Spring/mc1p1_assess_portfolio/analysis.py"
+git_dest=$githubdir/mscs/${project}
+mkdir -p  ${git_dest%/*}
+
+qi_source=$qidir/temp/${project} 
+if [ is_new ]; then
+  qi_source=$qidir/${project} 
+fi
+
+cp -p ${qi_source} ${git_dest%/*}
+
+cd ${githubdir}
+git add mscs/${project}
+git commit -m "Upload the original files for mscs homework."
+git push
+
+# user
+dreamingbird88
+# pw
+gdlj;jeff1980
+
+ls
 
 # Delete a repository
 # go to https://github.com/user_name/repository_name/setting
@@ -65,10 +89,6 @@ git pull https://github.com/dreamingbird88/programming/
 git remote add finance https://github.com/dreamingbird88/finance/
 git clone finance
 # git clone https://github.com/dreamingbird88/for_qi
-
-# Add a file
-cp ~/linux.sh linux.sh
-git add linux.sh
 
 # g4 change
 git config --global user.email jeffnju@gmail.com

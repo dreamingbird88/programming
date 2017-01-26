@@ -48,7 +48,7 @@ def optimize_portfolio(sd=dt.datetime(2008,1,1), ed=dt.datetime(2009,1,1), \
     dates = pd.date_range(sd, ed)
     prices_all = get_data(syms, dates)[syms+['SPY']]  # automatically adds SPY
     values = normalize(prices_all)
-    values_SPY = values['SPY']  # only SPY, for comparison later
+    value_SPY = values['SPY']  # only SPY, for comparison later
     values = values[syms]  # only portfolio symbols
     # Optimize portfolio allocations.
     mean, cov = get_stats(values)
@@ -90,9 +90,9 @@ def test_code():
     # Note that ALL of these values will be set to different values by
     # the autograder!
 
-    start_date = dt.datetime(2010,1,1)
-    end_date = dt.datetime(2010,12,31)
-    symbols = ['GOOG', 'AAPL', 'GLD', 'XOM']
+    #start_date = dt.datetime(2010,1,1)
+    #end_date = dt.datetime(2010,12,31)
+    #symbols = ['GOOG', 'AAPL', 'GLD', 'XOM']
 
     #start_date = dt.datetime(2004,1,1)
     #end_date = dt.datetime(2006,1,1)
@@ -102,18 +102,14 @@ def test_code():
     #end_date = dt.datetime(2006,05,31)
     #symbols = ['YHOO', 'XOM', 'GLD', 'HNZ']
 
-    #start_date = dt.datetime(2005,12,1)
-    #end_date = dt.datetime(2006,5,31)
-    #symbols = ['YHOO', 'XOM', 'GLD', 'HNZ']
-
-    #sd = dt.datetime(2010,1,1)
-    #ed = dt.datetime(2010,12,31)
-    #syms = ['GOOG', 'AAPL', 'GLD', 'XOM']
+    start_date = dt.datetime(2005,12,1)
+    end_date = dt.datetime(2006,5,31)
+    symbols = ['YHOO', 'HPQ', 'GLD', 'HNZ']
 
     # Assess the portfolio
     allocations, cr, adr, sddr, sr = optimize_portfolio(sd = start_date, ed = end_date,\
         syms = symbols, \
-        gen_plot = False)
+        gen_plot = True)
 
     # Print statistics
     print "Start Date:", start_date
